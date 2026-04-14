@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: 4월 12일 · 일요일
+      - heading "하루케어" [level=1] [ref=e7]
+      - paragraph [ref=e8]: 오늘 딱 3가지만 추천해요 — 고민 없이 바로 구매하세요
+    - region "오늘의 추천 생필품" [ref=e10]:
+      - article [ref=e11]:
+        - generic: "01"
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: 🫙
+            - generic [ref=e15]: 첫 번째 추천
+          - heading "락앤락 밀폐용기 3종" [level=2] [ref=e16]
+          - paragraph [ref=e17]: 식재료 보관하다 버리는 돈이 용기값보다 많아요
+          - generic [ref=e19]: 12,900원
+          - link "락앤락 밀폐용기 3종 쿠팡에서 구매하기" [ref=e20] [cursor=pointer]:
+            - /url: https://www.coupang.com/np/search?q=락앤락+밀폐용기+3종
+            - text: 쿠팡에서 구매하기
+            - img [ref=e21]
+      - article [ref=e23]:
+        - generic: "02"
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e26]: 🧽
+            - generic [ref=e27]: 두 번째 추천
+          - heading "3M 욕실 청소 스펀지" [level=2] [ref=e28]
+          - paragraph [ref=e29]: 일주일에 한 번만 써도 곰팡이 걱정 없어집니다
+          - generic [ref=e31]: 4,800원
+          - link "3M 욕실 청소 스펀지 쿠팡에서 구매하기" [ref=e32] [cursor=pointer]:
+            - /url: https://www.coupang.com/np/search?q=3M+욕실+청소+스펀지
+            - text: 쿠팡에서 구매하기
+            - img [ref=e33]
+      - article [ref=e35]:
+        - generic: "03"
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]: 🧴
+            - generic [ref=e39]: 세 번째 추천
+          - heading "비오레 페이셜 폼 200ml" [level=2] [ref=e40]
+          - paragraph [ref=e41]: 세안제 고민 끝, 이거 하나로 아침저녁 충분해요
+          - generic [ref=e43]: 7,200원
+          - link "비오레 페이셜 폼 200ml 쿠팡에서 구매하기" [ref=e44] [cursor=pointer]:
+            - /url: https://www.coupang.com/np/search?q=비오레+페이셜폼
+            - text: 쿠팡에서 구매하기
+            - img [ref=e45]
+    - generic [ref=e47]:
+      - paragraph [ref=e48]: 매일 자정 기준으로 새로운 추천이 업데이트됩니다
+      - paragraph [ref=e49]: © 2025 하루케어
+  - alert [ref=e50]

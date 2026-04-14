@@ -1,0 +1,153 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e162] [cursor=pointer]:
+    - img [ref=e163]
+  - alert [ref=e166]
+  - generic [ref=e297]:
+    - main [ref=e298]:
+      - generic [ref=e299]:
+        - generic [ref=e300]:
+          - generic [ref=e301]: 🌿
+          - heading "하루케어" [level=1] [ref=e302]
+        - generic [ref=e303]:
+          - button "라이프스타일 변경" [ref=e304]:
+            - generic [ref=e305]: 🏠
+            - generic [ref=e306]: 집순이형
+            - img [ref=e307]
+          - button "알림" [ref=e309]:
+            - img [ref=e310]
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - paragraph [ref=e315]: 건강 상태
+          - paragraph [ref=e316]: 카드 탭하면 수정
+        - generic [ref=e317]:
+          - button "체중 + 65kg 진행 중" [ref=e318]:
+            - generic [ref=e319]:
+              - paragraph [ref=e320]: 체중
+              - generic [ref=e321]: +
+            - paragraph [ref=e322]: 65kg
+            - generic [ref=e323]: 진행 중
+          - button "혈압 + 118/76mmHg 정상" [ref=e324]:
+            - generic [ref=e325]:
+              - paragraph [ref=e326]: 혈압
+              - generic [ref=e327]: +
+            - paragraph [ref=e328]: 118/76mmHg
+            - generic [ref=e329]: 정상
+          - button "혈당 + 95mg/dL 정상" [ref=e330]:
+            - generic [ref=e331]:
+              - paragraph [ref=e332]: 혈당
+              - generic [ref=e333]: +
+            - paragraph [ref=e334]: 95mg/dL
+            - generic [ref=e335]: 정상
+        - generic [ref=e336]:
+          - generic [ref=e337]:
+            - paragraph [ref=e338]:
+              - text: 목표까지
+              - generic [ref=e339]: "-5.0kg"
+              - text: 남았어요
+            - generic [ref=e340]: 29%
+          - generic [ref=e343]:
+            - generic [ref=e344]: 67kg 시작
+            - generic [ref=e345]: 목표 60kg
+      - generic [ref=e346]:
+        - paragraph [ref=e348]: 오늘의 실행 가이드
+        - generic [ref=e349]:
+          - paragraph [ref=e350]: 🌟 김하루님, 오늘 이렇게만 챙겨보세요!
+          - generic [ref=e351]:
+            - generic [ref=e352]:
+              - generic [ref=e353]: "1"
+              - generic [ref=e354]:
+                - paragraph [ref=e355]: ⚖️ 오늘 체중 기록하기
+                - paragraph [ref=e356]: 일관된 측정이 핵심이에요
+            - generic [ref=e357]:
+              - generic [ref=e358]: "2"
+              - generic [ref=e359]:
+                - paragraph [ref=e360]: 💧 물 1.5L 마시기
+                - paragraph [ref=e361]: 신진대사 활성화의 첫 걸음
+            - generic [ref=e362]:
+              - generic [ref=e363]: "3"
+              - generic [ref=e364]:
+                - paragraph [ref=e365]: 💪 간식 대신 단백질 섭취
+                - paragraph [ref=e366]: 포만감 높이고 체성분 개선
+      - generic [ref=e367]:
+        - generic [ref=e368]:
+          - paragraph [ref=e369]: 오늘의 추천
+          - generic [ref=e370]: Rule of 3
+        - generic [ref=e371]:
+          - article [ref=e480]:
+            - generic [ref=e481]:
+              - generic [ref=e482]:
+                - generic [ref=e483]: 🥜
+                - generic [ref=e484]:
+                  - generic [ref=e486]: 🥗 식단
+                  - heading "혼합 견과류 데일리 30봉" [level=3] [ref=e487]
+                  - paragraph [ref=e488]: 집에서 보내는 시간이 많은 분께 혼합 견과류 데일리 30봉을 특별히 추천해요
+              - generic [ref=e489]:
+                - generic [ref=e490]:
+                  - generic [ref=e491]: 16,900원
+                  - generic [ref=e492]: 21,000원
+                  - generic [ref=e493]: "-20%"
+                - generic [ref=e494]:
+                  - link "상세" [ref=e495] [cursor=pointer]:
+                    - /url: /product/d5
+                  - link "구매하기" [ref=e496] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=혼합견과류+데일리팩+30봉
+          - article [ref=e497]:
+            - generic [ref=e498]:
+              - generic [ref=e499]:
+                - generic [ref=e500]: 🌬️
+                - generic [ref=e501]:
+                  - generic [ref=e503]: 🫙 생필품
+                  - heading "삼성 공기청정기 필터 세트" [level=3] [ref=e504]
+                  - paragraph [ref=e505]: 집에서 보내는 시간이 많은 분께 삼성 공기청정기 필터 세트을 특별히 추천해요
+              - generic [ref=e506]:
+                - generic [ref=e507]:
+                  - generic [ref=e508]: 34,900원
+                  - generic [ref=e509]: 42,000원
+                  - generic [ref=e510]: "-17%"
+                - generic [ref=e511]:
+                  - link "상세" [ref=e512] [cursor=pointer]:
+                    - /url: /product/e4
+                  - link "구매하기" [ref=e513] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=삼성공기청정기+필터
+          - article [ref=e514]:
+            - generic [ref=e515]:
+              - generic [ref=e516]:
+                - generic [ref=e517]: 👁️
+                - generic [ref=e518]:
+                  - generic [ref=e520]: 💊 건강
+                  - heading "루테인 + 지아잔틴 60정" [level=3] [ref=e521]
+                  - paragraph [ref=e522]: 집에서 보내는 시간이 많은 분께 루테인 + 지아잔틴 60정을 특별히 추천해요
+              - generic [ref=e523]:
+                - generic [ref=e524]:
+                  - generic [ref=e525]: 22,900원
+                  - generic [ref=e526]: 29,000원
+                  - generic [ref=e527]: "-21%"
+                - generic [ref=e528]:
+                  - link "상세" [ref=e529] [cursor=pointer]:
+                    - /url: /product/h7
+                  - link "구매하기" [ref=e530] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=루테인+지아잔틴
+      - generic [ref=e423]:
+        - generic [ref=e424]:
+          - paragraph [ref=e425]: 오늘 체크리스트
+          - generic [ref=e426]: 목표까지 달림 🔥
+        - generic [ref=e427]:
+          - generic [ref=e430]: 0/3
+          - generic [ref=e432]:
+            - button "오늘 체중 기록 기록하기" [ref=e433]:
+              - generic [ref=e435]: 오늘 체중 기록
+              - link "기록하기" [ref=e436] [cursor=pointer]:
+                - /url: /home
+            - button "물 1.5L 마심" [ref=e437]:
+              - generic [ref=e439]: 물 1.5L 마심
+            - button "약·복용 완료" [ref=e440]:
+              - generic [ref=e442]: 약·복용 완료
+    - navigation [ref=e443]:
+      - link "홈" [ref=e444] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e445]
+        - generic [ref=e447]: 홈
+      - link "마이" [ref=e448] [cursor=pointer]:
+        - /url: /mypage
+        - img [ref=e449]
+        - generic [ref=e452]: 마이

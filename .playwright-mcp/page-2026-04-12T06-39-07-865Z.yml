@@ -1,0 +1,13 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - paragraph [ref=e7]: Step 2 / 2
+    - heading "이름을 알려주세요" [level=1] [ref=e43]
+    - paragraph [ref=e9]: 추천 메시지를 더 친근하게 보내드릴게요
+    - textbox "이름 또는 닉네임 (선택)" [ref=e44]
+    - paragraph [ref=e46]: 입력 안 하면 '회원님'으로 표시됩니다
+    - generic [ref=e48]:
+      - button "시작하기 🎉" [ref=e49]
+      - button "이전으로" [ref=e50]
+  - button "Open Next.js Dev Tools" [ref=e34] [cursor=pointer]:
+    - img [ref=e35]
+  - alert [ref=e38]

@@ -1,0 +1,30 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - button "뒤로" [ref=e4]:
+        - img [ref=e5]
+        - generic [ref=e7]: 뒤로
+      - generic [ref=e8]: 식단
+      - generic [ref=e9]: 🥜
+      - heading "혼합 견과류 데일리 30봉" [level=1] [ref=e10]
+      - generic [ref=e11]:
+        - generic [ref=e12]: ✦
+        - paragraph [ref=e13]: 하루 한 봉, 심혈관 건강 루틴
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - paragraph [ref=e16]: 🩺 건강 데이터 기반 추천 근거
+        - paragraph [ref=e17]: 김하루님의 현재 수치(혈압 118/76mmHg, 혈당 95mg/dL)를 기준으로 추천드렸어요. 아몬드·호두·캐슈넛 조합으로 오메가3 및 마그네슘 일일 권장량 20% 이상 충족. 소분 포장이라 집순이도 간편하게 챙길 수 있어요.
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]: 16,900원
+          - generic [ref=e21]:
+            - generic [ref=e22]: 21,000원
+            - generic [ref=e23]: 20% 할인
+        - paragraph [ref=e24]: 쿠팡 파트너스 링크 · 최저가 기준
+    - link "쿠팡에서 바로 구매하기" [ref=e27] [cursor=pointer]:
+      - /url: https://www.coupang.com/np/search?q=혼합견과류+데일리팩+30봉
+      - text: 쿠팡에서 바로 구매하기
+      - img [ref=e28]
+  - button "Open Next.js Dev Tools" [ref=e35] [cursor=pointer]:
+    - img [ref=e36]
+  - alert [ref=e39]

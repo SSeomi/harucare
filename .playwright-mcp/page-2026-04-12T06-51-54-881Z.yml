@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - main [ref=e3]:
+      - generic [ref=e4]:
+        - paragraph [ref=e5]: 나의 건강 리포트
+        - heading "회원님의 마이페이지" [level=1] [ref=e6]
+      - generic [ref=e7]:
+        - generic [ref=e8]: 회
+        - generic [ref=e9]:
+          - paragraph [ref=e10]: 회원님
+          - paragraph [ref=e11]: 집순이형 🏠
+        - generic [ref=e12]: 30일 기록 중
+      - generic [ref=e13]:
+        - paragraph [ref=e14]: 월간 건강 지표 추이
+        - generic [ref=e15]:
+          - button "체중" [ref=e16]
+          - button "혈압" [ref=e17]
+          - button "혈당" [ref=e18]
+        - generic [ref=e20]:
+          - generic [ref=e21]: 현재 체중
+          - generic [ref=e22]: 65kg
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: 🤖
+          - paragraph [ref=e26]: AI 코치 분석
+        - paragraph [ref=e27]: 건강 데이터를 3일 이상 기록하면 AI 코치 분석이 시작돼요. 매일 측정을 습관화해보세요!
+      - button "AI 프리미엄 AI 정밀 분석 리포트 받기 3개월 추세 + 식단 최적화 + 보충제 플랜" [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - paragraph [ref=e32]: AI 프리미엄
+            - paragraph [ref=e33]: AI 정밀 분석 리포트 받기
+            - paragraph [ref=e34]: 3개월 추세 + 식단 최적화 + 보충제 플랜
+          - img [ref=e36]
+    - navigation [ref=e38]:
+      - link "홈" [ref=e39] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e40]
+        - generic [ref=e42]: 홈
+      - link "마이" [ref=e43] [cursor=pointer]:
+        - /url: /mypage
+        - img [ref=e44]
+        - generic [ref=e47]: 마이
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]

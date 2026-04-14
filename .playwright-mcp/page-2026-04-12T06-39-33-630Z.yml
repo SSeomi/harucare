@@ -1,0 +1,123 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e34] [cursor=pointer]:
+    - img [ref=e35]
+  - alert [ref=e38]
+  - generic [ref=e51]:
+    - main [ref=e52]:
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - paragraph [ref=e56]: 4월 12일 · 일요일
+          - heading "하루케어" [level=1] [ref=e57]
+        - generic [ref=e58]: 김
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: 건강 지표
+          - paragraph [ref=e62]: 카드 탭하면 수정
+        - generic [ref=e63]:
+          - button "체중 65kg 정상" [ref=e64]:
+            - paragraph [ref=e65]: 체중
+            - paragraph [ref=e66]: 65kg
+            - generic [ref=e67]: 정상
+          - button "혈압 118/76mmHg 정상" [ref=e68]:
+            - paragraph [ref=e69]: 혈압
+            - paragraph [ref=e70]: 118/76mmHg
+            - generic [ref=e71]: 정상
+          - button "혈당 95mg/dL 정상" [ref=e72]:
+            - paragraph [ref=e73]: 혈당
+            - paragraph [ref=e74]: 95mg/dL
+            - generic [ref=e75]: 정상
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: 오늘의 맞춤 추천
+          - paragraph [ref=e79]: 김하루님, 오늘 이건 챙기셔야 해요!
+        - generic [ref=e80]:
+          - article [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]:
+                - generic [ref=e84]: 식단
+                - generic [ref=e85]: 🥜
+              - heading "혼합 견과류 데일리 30봉" [level=3] [ref=e86]
+              - paragraph [ref=e87]: 집에서 보내는 시간이 많은 분께 혼합 견과류 데일리 30봉을 특별히 추천해요
+              - generic [ref=e88]:
+                - generic [ref=e89]: 16,900원
+                - generic [ref=e90]: 21,000원
+                - generic [ref=e91]: "-20%"
+              - generic [ref=e92]:
+                - link "자세히 보기" [ref=e93] [cursor=pointer]:
+                  - /url: /product/d5
+                - link "구매하기" [ref=e94] [cursor=pointer]:
+                  - /url: https://www.coupang.com/np/search?q=혼합견과류+데일리팩+30봉
+                  - text: 구매하기
+                  - img [ref=e95]
+          - article [ref=e97]:
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - generic [ref=e100]: 생필품
+                - generic [ref=e101]: 🌬️
+              - heading "삼성 공기청정기 필터 세트" [level=3] [ref=e102]
+              - paragraph [ref=e103]: 집에서 보내는 시간이 많은 분께 삼성 공기청정기 필터 세트을 특별히 추천해요
+              - generic [ref=e104]:
+                - generic [ref=e105]: 34,900원
+                - generic [ref=e106]: 42,000원
+                - generic [ref=e107]: "-17%"
+              - generic [ref=e108]:
+                - link "자세히 보기" [ref=e109] [cursor=pointer]:
+                  - /url: /product/e4
+                - link "구매하기" [ref=e110] [cursor=pointer]:
+                  - /url: https://www.coupang.com/np/search?q=삼성공기청정기+필터
+                  - text: 구매하기
+                  - img [ref=e111]
+          - article [ref=e113]:
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - generic [ref=e116]: 건강
+                - generic [ref=e117]: 👁️
+              - heading "루테인 + 지아잔틴 60정" [level=3] [ref=e118]
+              - paragraph [ref=e119]: 집에서 보내는 시간이 많은 분께 루테인 + 지아잔틴 60정을 특별히 추천해요
+              - generic [ref=e120]:
+                - generic [ref=e121]: 22,900원
+                - generic [ref=e122]: 29,000원
+                - generic [ref=e123]: "-21%"
+              - generic [ref=e124]:
+                - link "자세히 보기" [ref=e125] [cursor=pointer]:
+                  - /url: /product/h7
+                - link "구매하기" [ref=e126] [cursor=pointer]:
+                  - /url: https://www.coupang.com/np/search?q=루테인+지아잔틴
+                  - text: 구매하기
+                  - img [ref=e127]
+      - generic [ref=e129]:
+        - paragraph [ref=e130]: 오늘의 루틴
+        - generic [ref=e131]:
+          - generic [ref=e132]:
+            - paragraph [ref=e134]: 약 복용 체크
+            - generic [ref=e135]:
+              - button "💊 오메가3 아침" [ref=e136]:
+                - generic [ref=e137]: 💊
+                - generic [ref=e138]: 오메가3
+                - generic [ref=e139]: 아침
+              - button "💊 마그네슘 저녁" [ref=e140]:
+                - generic [ref=e141]: 💊
+                - generic [ref=e142]: 마그네슘
+                - generic [ref=e143]: 저녁
+              - button "💊 비타민D 아침" [ref=e144]:
+                - generic [ref=e145]: 💊
+                - generic [ref=e146]: 비타민D
+                - generic [ref=e147]: 아침
+          - generic [ref=e148]:
+            - paragraph [ref=e149]: 재구매 알림
+            - generic [ref=e150]:
+              - generic [ref=e151]:
+                - generic [ref=e154]: 오메가3
+                - generic [ref=e155]: 3일 남음
+              - generic [ref=e156]:
+                - generic [ref=e159]: 마그네슘
+                - generic [ref=e160]: 12일 남음
+    - navigation [ref=e161]:
+      - link "홈" [ref=e162] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e163]
+        - generic [ref=e165]: 홈
+      - link "마이" [ref=e166] [cursor=pointer]:
+        - /url: /mypage
+        - img [ref=e167]
+        - generic [ref=e170]: 마이

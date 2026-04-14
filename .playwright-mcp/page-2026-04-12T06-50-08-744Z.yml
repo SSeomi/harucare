@@ -1,0 +1,27 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - paragraph [ref=e7]: Step 1 / 2
+    - heading "나의 라이프스타일은?" [level=1] [ref=e8]
+    - paragraph [ref=e9]: 선택하신 스타일에 맞게 생필품을 추천해드려요
+    - generic [ref=e10]:
+      - button "🏠 집순이형 주로 집에서 생활, 실내 활동 위주" [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: 🏠
+          - generic [ref=e14]:
+            - paragraph [ref=e15]: 집순이형
+            - paragraph [ref=e16]: 주로 집에서 생활, 실내 활동 위주
+      - button "🏃 운동 마니아형 규칙적 운동, 체력 관리에 적극적" [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: 🏃
+          - generic [ref=e20]:
+            - paragraph [ref=e21]: 운동 마니아형
+            - paragraph [ref=e22]: 규칙적 운동, 체력 관리에 적극적
+      - button "🍳 요리 안 함형 배달·즉석식 위주, 간편함 선호" [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: 🍳
+          - generic [ref=e26]:
+            - paragraph [ref=e27]: 요리 안 함형
+            - paragraph [ref=e28]: 배달·즉석식 위주, 간편함 선호
+    - button "다음으로" [disabled]
+  - button "Open Next.js Dev Tools" [ref=e34] [cursor=pointer]:
+    - img [ref=e35]

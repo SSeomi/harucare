@@ -1,0 +1,176 @@
+- generic [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e162] [cursor=pointer]:
+    - img [ref=e163]
+  - alert [ref=e166]
+  - generic [ref=e297]:
+    - generic [ref=e454]:
+      - paragraph [ref=e456]: 라이프스타일 변경
+      - paragraph [ref=e457]: 선택한 스타일에 맞는 맞춤 가이드를 드려요
+      - generic [ref=e458]:
+        - button "🏠 집순이형 수면 중심의 안정적 라이프스타일" [ref=e459]:
+          - generic [ref=e460]:
+            - generic [ref=e461]: 🏠
+            - generic [ref=e462]:
+              - paragraph [ref=e463]: 집순이형
+              - paragraph [ref=e464]: 수면 중심의 안정적 라이프스타일
+        - button "🏃 운동 마니아형 활동 많은 하루를 보내요" [ref=e465]:
+          - generic [ref=e466]:
+            - generic [ref=e467]: 🏃
+            - generic [ref=e468]:
+              - paragraph [ref=e469]: 운동 마니아형
+              - paragraph [ref=e470]: 활동 많은 하루를 보내요
+        - button "🍳 요리 안 함형 간편식 위주로 먹어요" [ref=e471]:
+          - generic [ref=e472]:
+            - generic [ref=e473]: 🍳
+            - generic [ref=e474]:
+              - paragraph [ref=e475]: 요리 안 함형
+              - paragraph [ref=e476]: 간편식 위주로 먹어요
+            - img [ref=e478]
+    - main [ref=e298]:
+      - generic [ref=e299]:
+        - generic [ref=e300]:
+          - generic [ref=e301]: 🌿
+          - heading "하루케어" [level=1] [ref=e302]
+        - generic [ref=e303]:
+          - button "라이프스타일 변경" [active] [ref=e304]:
+            - generic [ref=e305]: 🍳
+            - generic [ref=e306]: 요리 안 함형
+            - img [ref=e307]
+          - button "알림" [ref=e309]:
+            - img [ref=e310]
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - paragraph [ref=e315]: 건강 상태
+          - paragraph [ref=e316]: 카드 탭하면 수정
+        - generic [ref=e317]:
+          - button "체중 + 65kg 진행 중" [ref=e318]:
+            - generic [ref=e319]:
+              - paragraph [ref=e320]: 체중
+              - generic [ref=e321]: +
+            - paragraph [ref=e322]: 65kg
+            - generic [ref=e323]: 진행 중
+          - button "혈압 + 118/76mmHg 정상" [ref=e324]:
+            - generic [ref=e325]:
+              - paragraph [ref=e326]: 혈압
+              - generic [ref=e327]: +
+            - paragraph [ref=e328]: 118/76mmHg
+            - generic [ref=e329]: 정상
+          - button "혈당 + 95mg/dL 정상" [ref=e330]:
+            - generic [ref=e331]:
+              - paragraph [ref=e332]: 혈당
+              - generic [ref=e333]: +
+            - paragraph [ref=e334]: 95mg/dL
+            - generic [ref=e335]: 정상
+        - generic [ref=e336]:
+          - generic [ref=e337]:
+            - paragraph [ref=e338]:
+              - text: 목표까지
+              - generic [ref=e339]: "-5.0kg"
+              - text: 남았어요
+            - generic [ref=e340]: 29%
+          - generic [ref=e343]:
+            - generic [ref=e344]: 67kg 시작
+            - generic [ref=e345]: 목표 60kg
+      - generic [ref=e346]:
+        - paragraph [ref=e348]: 오늘의 실행 가이드
+        - generic [ref=e349]:
+          - paragraph [ref=e350]: 🌟 김하루님, 오늘 이렇게만 챙겨보세요!
+          - generic [ref=e351]:
+            - generic [ref=e352]:
+              - generic [ref=e353]: "1"
+              - generic [ref=e354]:
+                - paragraph [ref=e355]: ⚖️ 오늘 체중 기록하기
+                - paragraph [ref=e356]: 일관된 측정이 핵심이에요
+            - generic [ref=e357]:
+              - generic [ref=e358]: "2"
+              - generic [ref=e359]:
+                - paragraph [ref=e360]: 💧 물 1.5L 마시기
+                - paragraph [ref=e361]: 신진대사 활성화의 첫 걸음
+            - generic [ref=e362]:
+              - generic [ref=e363]: "3"
+              - generic [ref=e364]:
+                - paragraph [ref=e365]: 💪 간식 대신 단백질 섭취
+                - paragraph [ref=e366]: 포만감 높이고 체성분 개선
+      - generic [ref=e367]:
+        - generic [ref=e368]:
+          - paragraph [ref=e369]: 오늘의 추천
+          - generic [ref=e370]: Rule of 3
+        - generic [ref=e371]:
+          - article [ref=e372]:
+            - generic [ref=e373]:
+              - generic [ref=e374]:
+                - generic [ref=e375]: 🍚
+                - generic [ref=e376]:
+                  - generic [ref=e378]: 🥗 식단
+                  - heading "오뚜기 현미밥 24개입" [level=3] [ref=e379]
+                  - paragraph [ref=e380]: 바쁜 하루에도 오뚜기 현미밥 24개입 하나로 건강을 지킬 수 있어요
+              - generic [ref=e381]:
+                - generic [ref=e382]:
+                  - generic [ref=e383]: 18,900원
+                  - generic [ref=e384]: 23,000원
+                  - generic [ref=e385]: "-18%"
+                - generic [ref=e386]:
+                  - link "상세" [ref=e387] [cursor=pointer]:
+                    - /url: /product/d1
+                  - link "구매하기" [ref=e388] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=오뚜기+현미밥+24개
+          - article [ref=e389]:
+            - generic [ref=e390]:
+              - generic [ref=e391]:
+                - generic [ref=e392]: ⚖️
+                - generic [ref=e393]:
+                  - generic [ref=e395]: 🫙 생필품
+                  - heading "샤오미 스마트 체중계" [level=3] [ref=e396]
+                  - paragraph [ref=e397]: 바쁜 하루에도 샤오미 스마트 체중계 하나로 건강을 지킬 수 있어요
+              - generic [ref=e398]:
+                - generic [ref=e399]:
+                  - generic [ref=e400]: 29,900원
+                  - generic [ref=e401]: 39,000원
+                  - generic [ref=e402]: "-23%"
+                - generic [ref=e403]:
+                  - link "상세" [ref=e404] [cursor=pointer]:
+                    - /url: /product/e1
+                  - link "구매하기" [ref=e405] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=샤오미+스마트체중계
+          - article [ref=e406]:
+            - generic [ref=e407]:
+              - generic [ref=e408]:
+                - generic [ref=e409]: ☀️
+                - generic [ref=e410]:
+                  - generic [ref=e412]: 💊 건강
+                  - heading "비타민D3+K2 90정" [level=3] [ref=e413]
+                  - paragraph [ref=e414]: 바쁜 하루에도 비타민D3+K2 90정 하나로 건강을 지킬 수 있어요
+              - generic [ref=e415]:
+                - generic [ref=e416]:
+                  - generic [ref=e417]: 19,900원
+                  - generic [ref=e418]: 25,000원
+                  - generic [ref=e419]: "-20%"
+                - generic [ref=e420]:
+                  - link "상세" [ref=e421] [cursor=pointer]:
+                    - /url: /product/h8
+                  - link "구매하기" [ref=e422] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=비타민D3+K2
+      - generic [ref=e423]:
+        - generic [ref=e424]:
+          - paragraph [ref=e425]: 오늘 체크리스트
+          - generic [ref=e426]: 목표까지 달림 🔥
+        - generic [ref=e427]:
+          - generic [ref=e430]: 0/3
+          - generic [ref=e432]:
+            - button "오늘 체중 기록 기록하기" [ref=e433]:
+              - generic [ref=e435]: 오늘 체중 기록
+              - link "기록하기" [ref=e436] [cursor=pointer]:
+                - /url: /home
+            - button "물 1.5L 마심" [ref=e437]:
+              - generic [ref=e439]: 물 1.5L 마심
+            - button "약·복용 완료" [ref=e440]:
+              - generic [ref=e442]: 약·복용 완료
+    - navigation [ref=e443]:
+      - link "홈" [ref=e444] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e445]
+        - generic [ref=e447]: 홈
+      - link "마이" [ref=e448] [cursor=pointer]:
+        - /url: /mypage
+        - img [ref=e449]
+        - generic [ref=e452]: 마이

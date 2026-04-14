@@ -1,0 +1,176 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e220]:
+      - paragraph [ref=e222]: 라이프스타일 변경
+      - paragraph [ref=e223]: 선택한 스타일에 맞는 맞춤 가이드를 드려요
+      - generic [ref=e224]:
+        - button "🏠 집순이형 수면 중심의 안정적 라이프스타일" [ref=e225]:
+          - generic [ref=e226]:
+            - generic [ref=e227]: 🏠
+            - generic [ref=e228]:
+              - paragraph [ref=e229]: 집순이형
+              - paragraph [ref=e230]: 수면 중심의 안정적 라이프스타일
+        - button "🏃 운동 마니아형 활동 많은 하루를 보내요" [ref=e231]:
+          - generic [ref=e232]:
+            - generic [ref=e233]: 🏃
+            - generic [ref=e234]:
+              - paragraph [ref=e235]: 운동 마니아형
+              - paragraph [ref=e236]: 활동 많은 하루를 보내요
+            - img [ref=e238]
+        - button "🍳 요리 안 함형 간편식 위주로 먹어요" [ref=e240]:
+          - generic [ref=e241]:
+            - generic [ref=e242]: 🍳
+            - generic [ref=e243]:
+              - paragraph [ref=e244]: 요리 안 함형
+              - paragraph [ref=e245]: 간편식 위주로 먹어요
+    - main [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: 🌿
+          - heading "하루케어" [level=1] [ref=e7]
+        - generic [ref=e8]:
+          - button "라이프스타일 변경" [active] [ref=e9]:
+            - generic [ref=e10]: 🏃
+            - generic [ref=e11]: 운동 마니아형
+            - img [ref=e12]
+          - button "알림" [ref=e14]:
+            - img [ref=e15]
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: 건강 상태
+          - paragraph [ref=e21]: 카드 탭하면 수정
+        - generic [ref=e22]:
+          - button "체중 + 65kg 진행 중" [ref=e23]:
+            - generic [ref=e24]:
+              - paragraph [ref=e25]: 체중
+              - generic [ref=e26]: +
+            - paragraph [ref=e27]: 65kg
+            - generic [ref=e28]: 진행 중
+          - button "혈압 + 118/76mmHg 정상" [ref=e29]:
+            - generic [ref=e30]:
+              - paragraph [ref=e31]: 혈압
+              - generic [ref=e32]: +
+            - paragraph [ref=e33]: 118/76mmHg
+            - generic [ref=e34]: 정상
+          - button "혈당 + 95mg/dL 정상" [ref=e35]:
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: 혈당
+              - generic [ref=e38]: +
+            - paragraph [ref=e39]: 95mg/dL
+            - generic [ref=e40]: 정상
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - paragraph [ref=e43]:
+              - text: 목표까지
+              - generic [ref=e44]: "-5.0kg"
+              - text: 남았어요
+            - generic [ref=e45]: 29%
+          - generic [ref=e47]:
+            - generic [ref=e48]: 67kg 시작
+            - generic [ref=e49]: 목표 60kg
+      - generic [ref=e50]:
+        - paragraph [ref=e52]: 오늘의 실행 가이드
+        - generic [ref=e53]:
+          - paragraph [ref=e54]: 🌟 김하루님, 오늘 이렇게만 챙겨보세요!
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - generic [ref=e57]: "1"
+              - generic [ref=e58]:
+                - paragraph [ref=e59]: ⚖️ 오늘 체중 기록하기
+                - paragraph [ref=e60]: 일관된 측정이 핵심이에요
+            - generic [ref=e61]:
+              - generic [ref=e62]: "2"
+              - generic [ref=e63]:
+                - paragraph [ref=e64]: 💧 물 1.5L 마시기
+                - paragraph [ref=e65]: 신진대사 활성화의 첫 걸음
+            - generic [ref=e66]:
+              - generic [ref=e67]: "3"
+              - generic [ref=e68]:
+                - paragraph [ref=e69]: 💪 간식 대신 단백질 섭취
+                - paragraph [ref=e70]: 포만감 높이고 체성분 개선
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - paragraph [ref=e73]: 오늘의 추천
+          - generic [ref=e74]: Rule of 3
+        - generic [ref=e75]:
+          - article [ref=e168]:
+            - generic [ref=e169]:
+              - generic [ref=e170]:
+                - generic [ref=e171]: 🥗
+                - generic [ref=e172]:
+                  - generic [ref=e174]: 🥗 식단
+                  - heading "닭가슴살 샐러드 밀키트" [level=3] [ref=e175]
+                  - paragraph [ref=e176]: 활발한 라이프스타일에 닭가슴살 샐러드 밀키트으로 회복을 챙기세요
+              - generic [ref=e177]:
+                - generic [ref=e178]:
+                  - generic [ref=e179]: 9,800원
+                  - generic [ref=e180]: 12,000원
+                  - generic [ref=e181]: "-18%"
+                - generic [ref=e182]:
+                  - link "상세" [ref=e183] [cursor=pointer]:
+                    - /url: /product/d2
+                  - link "구매하기" [ref=e184] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=닭가슴살+샐러드+밀키트
+          - article [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic [ref=e188]: 🧘
+                - generic [ref=e189]:
+                  - generic [ref=e191]: 🫙 생필품
+                  - heading "요가매트 6mm TPE" [level=3] [ref=e192]
+                  - paragraph [ref=e193]: 활발한 라이프스타일에 요가매트 6mm TPE으로 회복을 챙기세요
+              - generic [ref=e194]:
+                - generic [ref=e195]:
+                  - generic [ref=e196]: 28,000원
+                  - generic [ref=e197]: 35,000원
+                  - generic [ref=e198]: "-20%"
+                - generic [ref=e199]:
+                  - link "상세" [ref=e200] [cursor=pointer]:
+                    - /url: /product/e5
+                  - link "구매하기" [ref=e201] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=요가매트+6mm+TPE
+          - article [ref=e202]:
+            - generic [ref=e203]:
+              - generic [ref=e204]:
+                - generic [ref=e205]: 💪
+                - generic [ref=e206]:
+                  - generic [ref=e208]: 💊 건강
+                  - heading "유청 단백질 WPI 1kg" [level=3] [ref=e209]
+                  - paragraph [ref=e210]: 활발한 라이프스타일에 유청 단백질 WPI 1kg으로 회복을 챙기세요
+              - generic [ref=e211]:
+                - generic [ref=e212]:
+                  - generic [ref=e213]: 39,900원
+                  - generic [ref=e214]: 52,000원
+                  - generic [ref=e215]: "-23%"
+                - generic [ref=e216]:
+                  - link "상세" [ref=e217] [cursor=pointer]:
+                    - /url: /product/h6
+                  - link "구매하기" [ref=e218] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=유청단백질+WPI+1kg
+      - generic [ref=e127]:
+        - generic [ref=e128]:
+          - paragraph [ref=e129]: 오늘 체크리스트
+          - generic [ref=e130]: 목표까지 달림 🔥
+        - generic [ref=e131]:
+          - generic [ref=e134]: 0/3
+          - generic [ref=e136]:
+            - button "오늘 체중 기록 기록하기" [ref=e137]:
+              - generic [ref=e139]: 오늘 체중 기록
+              - link "기록하기" [ref=e140] [cursor=pointer]:
+                - /url: /home
+            - button "물 1.5L 마심" [ref=e141]:
+              - generic [ref=e143]: 물 1.5L 마심
+            - button "약·복용 완료" [ref=e144]:
+              - generic [ref=e146]: 약·복용 완료
+    - navigation [ref=e147]:
+      - link "홈" [ref=e148] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e149]
+        - generic [ref=e151]: 홈
+      - link "마이" [ref=e152] [cursor=pointer]:
+        - /url: /mypage
+        - img [ref=e153]
+        - generic [ref=e156]: 마이
+  - button "Open Next.js Dev Tools" [ref=e162] [cursor=pointer]:
+    - img [ref=e163]
+  - alert [ref=e166]
