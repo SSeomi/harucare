@@ -1,0 +1,238 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+/* ── Brand Color Tokens ─────────────────────────────── */
+:root {
+  /* Core brand — Fresh Green */
+  --primary:       #2ECC71;
+  --primary-light: #A8E6CF;
+  --primary-dark:  #27AE60;
+
+  /* Surfaces */
+  --bg:           #F4FAF6;
+  --bg2:          #EDF7F1;
+  --card:         #FFFFFF;
+  --card2:        #F0FBF4;
+  --card-border:  #C8EDD8;
+  --card-border2: #B8E4C9;
+
+  /* Badge */
+  --badge-green: #E8F8F0;
+
+  /* Typography */
+  --text:   #1A1A1A;
+  --text2:  #374151;
+  --muted:  #6B7280;
+  --faint:  #D1EAD8;
+  --faint2: #E8F8F0;
+
+  /* Accent / Warning */
+  --warning: #FF6B35;
+
+  /* Button text */
+  --btn-text: #FFFFFF;
+
+  /* Health status */
+  --green:  #16A34A;
+  --orange: #EA580C;
+  --red:    #DC2626;
+  --blue:   #2563EB;
+  --purple: #9333EA;
+
+  /* Backwards compat aliases */
+  --amber:      #2ECC71;
+  --amber-glow: #A8E6CF;
+  --amber-dim:  rgba(46, 204, 113, 0.10);
+
+  --radius-card: 20px;
+  --radius-btn:  14px;
+}
+
+/* ── Tailwind v4 theme bridge ────────────────────────── */
+@theme inline {
+  --color-hc-primary:       var(--primary);
+  --color-hc-primary-light: var(--primary-light);
+  --color-hc-primary-dark:  var(--primary-dark);
+  --color-hc-bg:            var(--bg);
+  --color-hc-surface:       var(--card);
+  --color-hc-badge:         var(--badge-green);
+  --color-hc-text:          var(--text);
+  --color-hc-text2:         var(--text2);
+  --color-hc-muted:         var(--muted);
+  --color-hc-warning:       var(--warning);
+  --color-hc-border:        var(--card-border);
+  --color-hc-faint:         var(--faint);
+  --font-sans: 'Pretendard', 'Inter', system-ui, sans-serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Base ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pretendard', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ── Keyframes ──────────────────────────────────────── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUpSheet {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes checkPop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes progressFill {
+  from { width: 0%; }
+}
+
+/* ── Utility animations ─────────────────────────────── */
+.animate-slide-up   { animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in    { animation: fadeIn 0.4s ease both; }
+.animate-sheet-up   { animation: slideUpSheet 0.38s cubic-bezier(0.22, 1, 0.36, 1); }
+.animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 0.8s linear infinite; }
+.animate-check-pop  { animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-progress   { animation: progressFill 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ── Cards ──────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow:
+    0 2px 12px rgba(46, 204, 113, 0.07),
+    0 1px 3px  rgba(0, 0, 0, 0.04);
+}
+.card2 {
+  background: var(--card2);
+  border: 1px solid var(--card-border2);
+  border-radius: var(--radius-card);
+  box-shadow:
+    0 2px 8px rgba(46, 204, 113, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.btn-primary {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 16px;
+  border-radius: var(--radius-btn);
+  font-weight: 700; font-size: 15px;
+  color: var(--btn-text);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  box-shadow:
+    0 4px 18px rgba(46, 204, 113, 0.35),
+    0 1px 4px  rgba(46, 204, 113, 0.2);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+  cursor: pointer; text-decoration: none;
+  -webkit-user-select: none; user-select: none;
+}
+.btn-primary:hover  {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 24px rgba(46,204,113,0.45), 0 2px 6px rgba(46,204,113,0.2);
+}
+.btn-primary:active { transform: scale(0.97); filter: brightness(0.97); }
+.btn-primary:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.btn-secondary {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px 20px; border-radius: var(--radius-btn);
+  font-weight: 600; font-size: 14px;
+  color: var(--primary-dark);
+  background: rgba(46, 204, 113, 0.08);
+  border: 1.5px solid rgba(46, 204, 113, 0.25);
+  transition: all 0.15s; cursor: pointer;
+}
+.btn-secondary:hover  { background: rgba(46, 204, 113, 0.14); }
+.btn-secondary:active { transform: scale(0.97); }
+
+/* ── Bottom Nav ─────────────────────────────────────── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+  background: rgba(255, 255, 255, 0.94);
+  border-top: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -4px 20px rgba(46, 204, 113, 0.08);
+}
+
+/* ── Bottom Sheet ───────────────────────────────────── */
+.sheet-backdrop {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(20, 40, 25, 0.32);
+  backdrop-filter: blur(4px);
+}
+.sheet-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 101;
+  background: #FFFFFF;
+  border-top: 1px solid var(--card-border2);
+  border-radius: 24px 24px 0 0;
+  padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 40px rgba(46, 204, 113, 0.12);
+  animation: slideUpSheet 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Range Slider ───────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 6px;
+  background: var(--faint);
+  border-radius: 3px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.45);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--primary);
+  border: none; cursor: pointer;
+}
+
+/* ── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
+
+/* ── Recharts (green light theme) ──────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical   line {
+  stroke: var(--faint) !important;
+}
+.recharts-text {
+  fill: var(--muted) !important;
+  font-size: 11px !important;
+  font-family: 'Pretendard', 'Inter', system-ui !important;
+}
