@@ -1,6 +1,0 @@
-{
-  "buildCommand": "npm --prefix harucare run build",
-  "installCommand": "npm --prefix harucare install",
-  "outputDirectory": "harucare/.next",
-  "framework": "nextjs"
-}
