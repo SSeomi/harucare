@@ -291,16 +291,15 @@ export default function HomePage() {
               전체 보기
             </Link>
           </div>
-          {/* Horizontal scroll cards — each card ~80% of 390px = ~312px */}
+          {/* Horizontal scroll big cards */}
           <div
             className="flex gap-3 overflow-x-auto pb-2"
             style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
           >
             {MEALS_LIST.map((meal) => (
-              <Link
+              <div
                 key={meal.id}
-                href={`/meal/${meal.id}`}
-                className="flex-shrink-0 rounded-2xl overflow-hidden block transition-transform active:scale-[0.97]"
+                className="flex-shrink-0 rounded-2xl overflow-hidden"
                 style={{
                   width: "312px",
                   scrollSnapAlign: "start",
@@ -309,47 +308,77 @@ export default function HomePage() {
                   boxShadow: "0 2px 12px rgba(46,204,113,0.08)",
                 }}
               >
-                {/* Hero */}
+                {/* Hero photo area */}
                 <div
-                  className="flex items-center justify-center"
+                  className="relative flex items-center justify-center"
                   style={{
-                    height: "140px",
+                    height: "160px",
                     background: "linear-gradient(135deg, #E8F8F0 0%, #F0FBF4 100%)",
-                    fontSize: "72px",
+                    fontSize: "80px",
                   }}
                 >
                   {meal.emoji}
+                  {/* Category badge */}
+                  {meal.categories[0] && (
+                    <span
+                      className="absolute top-3 left-3 font-bold rounded-full px-2 py-1"
+                      style={{
+                        fontSize: "10px",
+                        background: "rgba(46,204,113,0.85)",
+                        color: "#fff",
+                      }}
+                    >
+                      {meal.categories[0] === "5min" ? "⚡ 5분" : meal.categories[0] === "low-cal" ? "🥗 저칼로리" : "💪 고단백"}
+                    </span>
+                  )}
                 </div>
+
                 {/* Info */}
                 <div className="p-4">
                   <h3
-                    className="font-bold mb-1"
+                    className="font-bold mb-2"
                     style={{ fontSize: "16px", color: "var(--text)", letterSpacing: "-0.3px" }}
                   >
                     {meal.name}
                   </h3>
+
+                  {/* Ingredient list */}
+                  <div className="space-y-1 mb-3">
+                    {meal.ingredients.map(ing => (
+                      <div key={ing.id} className="flex items-center gap-2">
+                        <span style={{ fontSize: "13px" }}>{ing.emoji}</span>
+                        <span style={{ fontSize: "12px", color: "var(--text2)" }}>
+                          {ing.label.split("(")[0].trim()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Time / kcal */}
                   <div className="flex items-center gap-3 mb-2">
                     <span style={{ fontSize: "12px", color: "var(--muted)" }}>⏱ {meal.minutes}분</span>
                     <span style={{ fontSize: "12px", color: "var(--muted)" }}>🔥 {meal.kcal}kcal</span>
                   </div>
-                  <p
-                    className="mb-3"
-                    style={{ fontSize: "12px", color: "var(--primary-dark)", lineHeight: 1.4 }}
-                  >
+
+                  {/* Health note */}
+                  <p className="mb-3" style={{ fontSize: "12px", color: "var(--primary-dark)", lineHeight: 1.4 }}>
                     {meal.healthNote}
                   </p>
-                  <div
-                    className="flex items-center justify-center rounded-xl py-2.5 font-bold"
+
+                  {/* Cart button */}
+                  <Link
+                    href={`/cart/${meal.id}`}
+                    className="flex items-center justify-center gap-2 rounded-xl py-2.5 font-bold transition-opacity active:opacity-80"
                     style={{
                       fontSize: "13px",
                       color: "#fff",
                       background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
                     }}
                   >
-                    🍱 바로 한끼 보기
-                  </div>
+                    🛒 한번에 담기
+                  </Link>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </section>

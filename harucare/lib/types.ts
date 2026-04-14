@@ -38,10 +38,12 @@ export type MealCategory = '5min' | 'low-cal' | 'high-protein';
 
 export interface MealIngredient {
   id: string;
+  emoji: string;
   label: string;
   price: string;
   priceNum: number;
-  coupangUrl: string;
+  platform: 'coupang' | 'kurly';
+  purchaseUrl: string;
 }
 
 export interface Meal {
