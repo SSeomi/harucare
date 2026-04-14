@@ -33,3 +33,26 @@ export interface Product {
   keyBenefit: string;
   detailReason: string;
 }
+
+export type MealCategory = '5min' | 'low-cal' | 'high-protein';
+
+export interface MealIngredient {
+  id: string;
+  label: string;
+  price: string;
+  priceNum: number;
+  coupangUrl: string;
+}
+
+export interface Meal {
+  id: string;
+  emoji: string;
+  name: string;
+  minutes: number;
+  kcal: number;
+  categories: MealCategory[];
+  healthNote: string;
+  highlight: string;
+  steps: string[];
+  ingredients: MealIngredient[];
+}

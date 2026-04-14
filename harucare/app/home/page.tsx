@@ -10,23 +10,19 @@ import {
 } from "@/lib/storage";
 import { getRecommendations } from "@/lib/recommendations";
 import { getPrimaryAlert } from "@/lib/health";
+import Link from "next/link";
 import HealthMetricsSection from "@/components/HealthMetricsSection";
 import RecommendationCard from "@/components/RecommendationCard";
 import ActionGuideSection from "@/components/ActionGuideSection";
 import ChecklistSection from "@/components/ChecklistSection";
 import BottomNav from "@/components/BottomNav";
+import { MEALS_LIST } from "@/lib/meals-data";
 
 const PERSONAS: { id: Persona; emoji: string; title: string; desc: string }[] = [
   { id: "homebody", emoji: "🏠", title: "집순이형",      desc: "수면 중심의 안정적 라이프스타일" },
   { id: "active",   emoji: "🏃", title: "운동 마니아형", desc: "활동 많은 하루를 보내요" },
   { id: "no-cook",  emoji: "🍳", title: "요리 안 함형",  desc: "간편식 위주로 먹어요" },
 ];
-
-const TODAY = (() => {
-  const d = new Date();
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
-  return `${d.getMonth() + 1}월 ${d.getDate()}일 · ${days[d.getDay()]}요일`;
-})();
 
 export default function HomePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -281,7 +277,84 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Section 3: Rule of 3 ── */}
+        {/* ── Section 3: Today's Quick Meal ── */}
+        <section className="mb-5 animate-slide-up" style={{ animationDelay: "200ms" }}>
+          <div className="flex items-center justify-between mb-3">
+            <p className="font-semibold" style={{ fontSize: "13px", color: "var(--text2)" }}>
+              오늘 저녁은 이거 어때요?
+            </p>
+            <Link
+              href="/meal"
+              className="font-semibold"
+              style={{ fontSize: "12px", color: "var(--primary-dark)" }}
+            >
+              전체 보기
+            </Link>
+          </div>
+          {/* Horizontal scroll cards — each card ~80% of 390px = ~312px */}
+          <div
+            className="flex gap-3 overflow-x-auto pb-2"
+            style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
+          >
+            {MEALS_LIST.map((meal) => (
+              <Link
+                key={meal.id}
+                href={`/meal/${meal.id}`}
+                className="flex-shrink-0 rounded-2xl overflow-hidden block transition-transform active:scale-[0.97]"
+                style={{
+                  width: "312px",
+                  scrollSnapAlign: "start",
+                  background: "var(--card)",
+                  border: "1px solid var(--card-border)",
+                  boxShadow: "0 2px 12px rgba(46,204,113,0.08)",
+                }}
+              >
+                {/* Hero */}
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    height: "140px",
+                    background: "linear-gradient(135deg, #E8F8F0 0%, #F0FBF4 100%)",
+                    fontSize: "72px",
+                  }}
+                >
+                  {meal.emoji}
+                </div>
+                {/* Info */}
+                <div className="p-4">
+                  <h3
+                    className="font-bold mb-1"
+                    style={{ fontSize: "16px", color: "var(--text)", letterSpacing: "-0.3px" }}
+                  >
+                    {meal.name}
+                  </h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span style={{ fontSize: "12px", color: "var(--muted)" }}>⏱ {meal.minutes}분</span>
+                    <span style={{ fontSize: "12px", color: "var(--muted)" }}>🔥 {meal.kcal}kcal</span>
+                  </div>
+                  <p
+                    className="mb-3"
+                    style={{ fontSize: "12px", color: "var(--primary-dark)", lineHeight: 1.4 }}
+                  >
+                    {meal.healthNote}
+                  </p>
+                  <div
+                    className="flex items-center justify-center rounded-xl py-2.5 font-bold"
+                    style={{
+                      fontSize: "13px",
+                      color: "#fff",
+                      background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                    }}
+                  >
+                    🍱 바로 한끼 보기
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Section 4: Rule of 3 ── */}
         <section className="mb-5">
           <div
             className="flex items-center justify-between mb-3 animate-slide-up"

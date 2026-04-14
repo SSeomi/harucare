@@ -20,6 +20,30 @@ const TABS = [
     ),
   },
   {
+    href: "/meal",
+    label: "바로 한끼",
+    icon: (active: boolean) => (
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <rect
+          x="3" y="10" width="16" height="9" rx="2"
+          stroke={active ? "var(--primary)" : "var(--muted)"}
+          strokeWidth="1.8"
+          fill={active ? "rgba(46,204,113,0.12)" : "none"}
+        />
+        <path
+          d="M7 10V7a4 4 0 018 0v3"
+          stroke={active ? "var(--primary)" : "var(--muted)"}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <circle
+          cx="11" cy="14.5" r="1.5"
+          fill={active ? "var(--primary)" : "var(--muted)"}
+        />
+      </svg>
+    ),
+  },
+  {
     href: "/mypage",
     label: "마이",
     icon: (active: boolean) => (
@@ -59,7 +83,7 @@ export default function BottomNav() {
             <span
               className="font-semibold"
               style={{
-                fontSize: "11px",
+                fontSize: "10px",
                 color: active ? "var(--primary-dark)" : "var(--muted)",
               }}
             >
