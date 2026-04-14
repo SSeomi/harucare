@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - button "뒤로" [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: 뒤로
+      - generic [ref=e9]: 🍗
+      - generic [ref=e10]:
+        - heading "단백질 듬뿍 닭가슴살 컵밥" [level=1] [ref=e11]
+        - generic [ref=e12]:
+          - generic [ref=e13]: ⏱ 7분 소요
+          - generic [ref=e14]: 🔥 450kcal
+          - generic [ref=e15]: 🥗 고단백 저지방으로 근육 보호하며 체중 감량
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - paragraph [ref=e18]: 이렇게만 하세요 👇
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - generic [ref=e21]: "1"
+            - paragraph [ref=e22]: 오뚜기 현미밥을 전자레인지에 2분 돌리세요
+          - generic [ref=e23]:
+            - generic [ref=e24]: "2"
+            - paragraph [ref=e25]: 하림 닭가슴살 팩을 뜯어 뜨거운 밥 위에 올리세요
+          - generic [ref=e26]:
+            - generic [ref=e27]: "3"
+            - paragraph [ref=e28]: 저칼로리 스리라차 소스를 기호에 맞게 뿌리면 완성!
+        - generic [ref=e29]:
+          - generic [ref=e30]: ✨
+          - paragraph [ref=e31]: 칼질도 불도 필요 없어요 🙌
+      - generic [ref=e32]:
+        - paragraph [ref=e33]: 이 조합 바로 구매하기 🛒
+        - generic [ref=e34]:
+          - button "오뚜기 현미밥 150g (12개입) 13,500원" [ref=e35]:
+            - generic [ref=e36]:
+              - img
+            - paragraph [ref=e37]: 오뚜기 현미밥 150g (12개입)
+            - paragraph [ref=e38]: 13,500원
+          - button "하림 닭가슴살 100g (10팩) 18,900원" [ref=e39]:
+            - generic [ref=e40]:
+              - img
+            - paragraph [ref=e41]: 하림 닭가슴살 100g (10팩)
+            - paragraph [ref=e42]: 18,900원
+          - button "저칼로리 스리라차 소스 230ml 6,500원" [ref=e43]:
+            - generic [ref=e44]:
+              - img
+            - paragraph [ref=e45]: 저칼로리 스리라차 소스 230ml
+            - paragraph [ref=e46]: 6,500원
+        - generic [ref=e47]:
+          - generic [ref=e48]: 선택 3개 합계
+          - generic [ref=e49]: 38,900원
+    - generic [ref=e51]:
+      - paragraph [ref=e52]: 한 번에 구매하고 내일 아침에 바로 드세요!
+      - link "🛒 장바구니 전체 담기" [ref=e53] [cursor=pointer]:
+        - /url: https://www.coupang.com/np/search?q=%EC%98%A4%EB%9A%9C%EA%B8%B0%2B%ED%95%98%EB%A6%BC%2B%EC%A0%80%EC%B9%BC%EB%A1%9C%EB%A6%AC
+        - text: 🛒 장바구니 전체 담기
+        - img [ref=e54]
+  - button "Open Next.js Dev Tools" [ref=e61] [cursor=pointer]:
+    - img [ref=e62]
+  - alert [ref=e65]

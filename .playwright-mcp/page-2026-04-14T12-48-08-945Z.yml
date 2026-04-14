@@ -1,0 +1,212 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - main [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: 🌿
+          - heading "하루케어" [level=1] [ref=e7]
+        - generic [ref=e8]:
+          - button "라이프스타일 변경" [ref=e9]:
+            - generic [ref=e10]: 🏠
+            - generic [ref=e11]: 집순이형
+            - img [ref=e12]
+          - button "알림" [ref=e14]:
+            - img [ref=e15]
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: 건강 상태
+          - paragraph [ref=e21]: 카드 탭하면 수정
+        - generic [ref=e22]:
+          - button "체중 + 65kg 진행 중" [ref=e23]:
+            - generic [ref=e24]:
+              - paragraph [ref=e25]: 체중
+              - generic [ref=e26]: +
+            - paragraph [ref=e27]: 65kg
+            - generic [ref=e28]: 진행 중
+          - button "혈압 + 118/76mmHg 정상" [ref=e29]:
+            - generic [ref=e30]:
+              - paragraph [ref=e31]: 혈압
+              - generic [ref=e32]: +
+            - paragraph [ref=e33]: 118/76mmHg
+            - generic [ref=e34]: 정상
+          - button "혈당 + 95mg/dL 정상" [ref=e35]:
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: 혈당
+              - generic [ref=e38]: +
+            - paragraph [ref=e39]: 95mg/dL
+            - generic [ref=e40]: 정상
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - paragraph [ref=e43]:
+              - text: 목표까지
+              - generic [ref=e44]: "-5.0kg"
+              - text: 남았어요
+            - generic [ref=e45]: 29%
+          - generic [ref=e47]:
+            - generic [ref=e48]: 67kg 시작
+            - generic [ref=e49]: 목표 60kg
+      - generic [ref=e50]:
+        - paragraph [ref=e52]: 오늘의 실행 가이드
+        - generic [ref=e53]:
+          - paragraph [ref=e54]: 🌟 하루님, 오늘 이렇게만 챙겨보세요!
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - generic [ref=e57]: "1"
+              - generic [ref=e58]:
+                - paragraph [ref=e59]: ⚖️ 오늘 체중 기록하기
+                - paragraph [ref=e60]: 일관된 측정이 핵심이에요
+            - generic [ref=e61]:
+              - generic [ref=e62]: "2"
+              - generic [ref=e63]:
+                - paragraph [ref=e64]: 💧 물 1.5L 마시기
+                - paragraph [ref=e65]: 신진대사 활성화의 첫 걸음
+            - generic [ref=e66]:
+              - generic [ref=e67]: "3"
+              - generic [ref=e68]:
+                - paragraph [ref=e69]: 💪 간식 대신 단백질 섭취
+                - paragraph [ref=e70]: 포만감 높이고 체성분 개선
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - paragraph [ref=e73]: 오늘 저녁은 이거 어때요?
+          - link "전체 보기" [ref=e74] [cursor=pointer]:
+            - /url: /meal
+        - generic [ref=e75]:
+          - link "🍗 단백질 듬뿍 닭가슴살 컵밥 ⏱ 7분 🔥 450kcal 고단백 저지방으로 근육 보호하며 체중 감량 🍱 바로 한끼 보기" [ref=e76] [cursor=pointer]:
+            - /url: /meal/m1
+            - generic [ref=e77]: 🍗
+            - generic [ref=e78]:
+              - heading "단백질 듬뿍 닭가슴살 컵밥" [level=3] [ref=e79]
+              - generic [ref=e80]:
+                - generic [ref=e81]: ⏱ 7분
+                - generic [ref=e82]: 🔥 450kcal
+              - paragraph [ref=e83]: 고단백 저지방으로 근육 보호하며 체중 감량
+              - generic [ref=e84]: 🍱 바로 한끼 보기
+          - link "🍳 간장 계란 버터밥 ⏱ 5분 🔥 380kcal 당 수치를 낮추는 현미밥 조합 🍱 바로 한끼 보기" [ref=e85] [cursor=pointer]:
+            - /url: /meal/m2
+            - generic [ref=e86]: 🍳
+            - generic [ref=e87]:
+              - heading "간장 계란 버터밥" [level=3] [ref=e88]
+              - generic [ref=e89]:
+                - generic [ref=e90]: ⏱ 5분
+                - generic [ref=e91]: 🔥 380kcal
+              - paragraph [ref=e92]: 당 수치를 낮추는 현미밥 조합
+              - generic [ref=e93]: 🍱 바로 한끼 보기
+          - link "🥑 참치 아보카도 덮밥 ⏱ 8분 🔥 420kcal 아보카도 불포화지방이 혈압 안정에 도움 🍱 바로 한끼 보기" [ref=e94] [cursor=pointer]:
+            - /url: /meal/m3
+            - generic [ref=e95]: 🥑
+            - generic [ref=e96]:
+              - heading "참치 아보카도 덮밥" [level=3] [ref=e97]
+              - generic [ref=e98]:
+                - generic [ref=e99]: ⏱ 8분
+                - generic [ref=e100]: 🔥 420kcal
+              - paragraph [ref=e101]: 아보카도 불포화지방이 혈압 안정에 도움
+              - generic [ref=e102]: 🍱 바로 한끼 보기
+          - link "🥣 두부 된장국 정식 ⏱ 10분 🔥 320kcal 이소플라본 풍부, 혈압·혈당 동시 완화 🍱 바로 한끼 보기" [ref=e103] [cursor=pointer]:
+            - /url: /meal/m4
+            - generic [ref=e104]: 🥣
+            - generic [ref=e105]:
+              - heading "두부 된장국 정식" [level=3] [ref=e106]
+              - generic [ref=e107]:
+                - generic [ref=e108]: ⏱ 10분
+                - generic [ref=e109]: 🔥 320kcal
+              - paragraph [ref=e110]: 이소플라본 풍부, 혈압·혈당 동시 완화
+              - generic [ref=e111]: 🍱 바로 한끼 보기
+          - link "🫙 저당 그릭요거트 볼 ⏱ 3분 🔥 280kcal 프로바이오틱스로 장 건강, 혈당 안정화 🍱 바로 한끼 보기" [ref=e112] [cursor=pointer]:
+            - /url: /meal/m5
+            - generic [ref=e113]: 🫙
+            - generic [ref=e114]:
+              - heading "저당 그릭요거트 볼" [level=3] [ref=e115]
+              - generic [ref=e116]:
+                - generic [ref=e117]: ⏱ 3분
+                - generic [ref=e118]: 🔥 280kcal
+              - paragraph [ref=e119]: 프로바이오틱스로 장 건강, 혈당 안정화
+              - generic [ref=e120]: 🍱 바로 한끼 보기
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - paragraph [ref=e123]: 오늘의 추천
+          - generic [ref=e124]: Rule of 3
+        - generic [ref=e125]:
+          - article [ref=e126]:
+            - generic [ref=e127]:
+              - generic [ref=e128]:
+                - generic [ref=e129]: 🥜
+                - generic [ref=e130]:
+                  - generic [ref=e132]: 🥗 식단
+                  - heading "혼합 견과류 데일리 30봉" [level=3] [ref=e133]
+                  - paragraph [ref=e134]: 집에서 보내는 시간이 많은 분께 혼합 견과류 데일리 30봉을 특별히 추천해요
+              - generic [ref=e135]:
+                - generic [ref=e136]:
+                  - generic [ref=e137]: 16,900원
+                  - generic [ref=e138]: 21,000원
+                  - generic [ref=e139]: "-20%"
+                - generic [ref=e140]:
+                  - link "상세" [ref=e141] [cursor=pointer]:
+                    - /url: /product/d5
+                  - link "구매하기" [ref=e142] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=혼합견과류+데일리팩+30봉
+          - article [ref=e143]:
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - generic [ref=e146]: 🌬️
+                - generic [ref=e147]:
+                  - generic [ref=e149]: 🫙 생필품
+                  - heading "삼성 공기청정기 필터 세트" [level=3] [ref=e150]
+                  - paragraph [ref=e151]: 집에서 보내는 시간이 많은 분께 삼성 공기청정기 필터 세트을 특별히 추천해요
+              - generic [ref=e152]:
+                - generic [ref=e153]:
+                  - generic [ref=e154]: 34,900원
+                  - generic [ref=e155]: 42,000원
+                  - generic [ref=e156]: "-17%"
+                - generic [ref=e157]:
+                  - link "상세" [ref=e158] [cursor=pointer]:
+                    - /url: /product/e4
+                  - link "구매하기" [ref=e159] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=삼성공기청정기+필터
+          - article [ref=e160]:
+            - generic [ref=e161]:
+              - generic [ref=e162]:
+                - generic [ref=e163]: 👁️
+                - generic [ref=e164]:
+                  - generic [ref=e166]: 💊 건강
+                  - heading "루테인 + 지아잔틴 60정" [level=3] [ref=e167]
+                  - paragraph [ref=e168]: 집에서 보내는 시간이 많은 분께 루테인 + 지아잔틴 60정을 특별히 추천해요
+              - generic [ref=e169]:
+                - generic [ref=e170]:
+                  - generic [ref=e171]: 22,900원
+                  - generic [ref=e172]: 29,000원
+                  - generic [ref=e173]: "-21%"
+                - generic [ref=e174]:
+                  - link "상세" [ref=e175] [cursor=pointer]:
+                    - /url: /product/h7
+                  - link "구매하기" [ref=e176] [cursor=pointer]:
+                    - /url: https://www.coupang.com/np/search?q=루테인+지아잔틴
+      - generic [ref=e177]:
+        - generic [ref=e178]:
+          - paragraph [ref=e179]: 오늘 체크리스트
+          - generic [ref=e180]: 목표까지 달림 🔥
+        - generic [ref=e181]:
+          - generic [ref=e184]: 0/3
+          - generic [ref=e186]:
+            - button "오늘 체중 기록 기록하기" [ref=e187]:
+              - generic [ref=e189]: 오늘 체중 기록
+              - link "기록하기" [ref=e190] [cursor=pointer]:
+                - /url: /home
+            - button "물 1.5L 마심" [ref=e191]:
+              - generic [ref=e193]: 물 1.5L 마심
+            - button "약·복용 완료" [ref=e194]:
+              - generic [ref=e196]: 약·복용 완료
+    - navigation [ref=e197]:
+      - link "홈" [ref=e198] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e199]
+        - generic [ref=e201]: 홈
+      - link "바로 한끼" [ref=e202] [cursor=pointer]:
+        - /url: /meal
+        - img [ref=e203]
+        - generic [ref=e207]: 바로 한끼
+      - link "마이" [ref=e208] [cursor=pointer]:
+        - /url: /mypage
+        - img [ref=e209]
+        - generic [ref=e212]: 마이
+  - button "Open Next.js Dev Tools" [ref=e218] [cursor=pointer]:
+    - img [ref=e219]
