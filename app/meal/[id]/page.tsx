@@ -14,7 +14,7 @@ export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
     params.then(async ({ id }) => {
       let m: Meal | undefined;
       // API 데이터(api-xxx) vs 하드코딩 데이터 분기
-      if (id.startsWith("api-")) {
+      if (id.startsWith("api-") || id.startsWith("mafra-")) {
         try {
           const res = await fetch(`/api/recipes?id=${encodeURIComponent(id)}`);
           if (res.ok) m = await res.json();

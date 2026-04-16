@@ -1,148 +1,120 @@
 import { NextResponse } from 'next/server';
-import type { Meal, MealCategory, MealIngredient } from '@/lib/types';
+import type { Meal, MealCategory } from '@/lib/types';
 
 const API_KEY = 'a922197d96cf47b3afd6ca53ad482e85e6dfaea20d0a68edd3033c45bb866760';
-const BASE_URL = 'https://openapi.foodsafetykorea.go.kr/api';
-const FETCH_COUNT = 50;
+// 농림축산식품 공공데이터포털 레시피 기본정보 API
+const BASE_URL = 'http://211.237.50.150:7080/openapi';
+const GRID_BASIC = 'Grid_20150827000000000226_1';
+const FETCH_COUNT = 100;
 
 // ── 서버 인메모리 캐시 (1시간) ──────────────────────────────────
 let _cache: Meal[] | null = null;
 let _cacheAt = 0;
 const CACHE_TTL = 60 * 60 * 1000;
 
-// ── 재료 이모지 매핑 ────────────────────────────────────────────
-const EMOJI_MAP: [string, string][] = [
-  ['닭', '🍗'], ['삼겹', '🥩'], ['돼지', '🥩'], ['소고기', '🥩'], ['쇠고기', '🥩'],
-  ['참치', '🐟'], ['생선', '🐟'], ['고등어', '🐟'], ['연어', '🐟'], ['새우', '🦐'],
-  ['두부', '🥣'], ['계란', '🥚'], ['달걀', '🥚'], ['밥', '🍚'], ['쌀', '🍚'],
-  ['현미', '🍚'], ['국수', '🍜'], ['면', '🍜'], ['파스타', '🍝'],
-  ['시금치', '🥬'], ['배추', '🥬'], ['상추', '🥬'], ['깻잎', '🌿'], ['파', '🌿'],
-  ['버섯', '🍄'], ['당근', '🥕'], ['양파', '🧅'], ['마늘', '🧄'], ['감자', '🥔'],
-  ['토마토', '🍅'], ['오이', '🥒'], ['아보카도', '🥑'], ['브로콜리', '🥦'],
-  ['김치', '🌶️'], ['고추', '🌶️'], ['간장', '🫙'], ['된장', '🫙'], ['고추장', '🫙'],
-  ['소금', '🧂'], ['설탕', '🧂'], ['참기름', '🫙'], ['식용유', '🫙'], ['버터', '🧈'],
-  ['우유', '🥛'], ['치즈', '🧀'], ['요거트', '🥛'],
-];
+// ── 요리 유형 → 이모지 ──────────────────────────────────────────
+const TY_EMOJI: Record<string, string> = {
+  '밥': '🍚', '국/찌개': '🍲', '반찬': '🥢', '면/만두': '🍜',
+  '디저트': '🍮', '양식': '🍝', '구이': '🥩', '볶음': '🍳',
+  '튀김': '🍗', '찜': '🫕', '조림': '🥘', '무침': '🥗',
+  '떡/한과': '🍡', '빵': '🍞', '음료': '🧃', '샐러드': '🥗',
+  '샌드위치': '🥪', '스프': '🍵', '전/부침': '🥞',
+};
 
-function getEmoji(name: string): string {
-  for (const [key, em] of EMOJI_MAP) {
-    if (name.includes(key)) return em;
-  }
-  return '🥄';
+// ── 주재료 분류 → 이모지 ───────────────────────────────────────
+const IRDNT_EMOJI: Record<string, string> = {
+  '곡류': '🌾', '채소류': '🥬', '육류': '🥩', '어패류': '🐟',
+  '두류': '🫘', '달걀류': '🥚', '유제품류': '🥛', '과일류': '🍎',
+  '버섯류': '🍄', '해조류': '🌿', '기타': '🥄',
+};
+
+// ── 조리시간 파싱: "30분" → 30 ─────────────────────────────────
+function parseMinutes(cookingTime: string): number {
+  const m = (cookingTime || '').match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : 30;
 }
 
-// ── 재료 텍스트 파싱 ────────────────────────────────────────────
-function parseIngredients(text: string, recipeId: string): MealIngredient[] {
-  if (!text) return [];
-
-  // RCP_PARTS_DTLS 첫 줄은 레시피명 반복인 경우가 많음 → 두 번째 줄부터 사용
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-  // 재료 줄 선별: 숫자 단위(g, ml, 개, 큰술 등)가 포함된 줄 우선
-  const hasUnit = (s: string) => /[\d]+[gml개모팩컵큰작]|큰술|작은술|한줌|약간|조금/.test(s);
-  const ingLines = lines.filter(hasUnit);
-  const source = ingLines.length > 0 ? ingLines.join(', ') : lines.slice(1).join(', ');
-
-  const items = source
-    .split(',')
-    .map(s => s.trim())
-    .filter(s => s.length > 1)
-    .slice(0, 6);
-
-  return items.map((item, i) => {
-    const firstName = item.split(/[\s(（]/)[0];
-    const name = firstName.replace(/[^\uAC00-\uD7A3a-zA-Z]/g, '') || firstName;
-    return {
-      id: `api-${recipeId}-${i}`,
-      emoji: getEmoji(name),
-      label: item,
-      price: '',
-      priceNum: 0,
-      platform: 'coupang' as const,
-      purchaseUrl: `https://www.coupang.com/np/search?q=${encodeURIComponent(name)}`,
-    };
-  });
+// ── 칼로리 파싱: "580Kcal" → 580 ──────────────────────────────
+function parseKcal(calorie: string): number {
+  const m = (calorie || '').match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : 0;
 }
 
 // ── 카테고리 추론 ───────────────────────────────────────────────
-function deriveCategories(kcal: number, way: string, pro: number): MealCategory[] {
+function deriveCategories(kcal: number, minutes: number, tyNm: string): MealCategory[] {
   const cats: MealCategory[] = [];
-  if (kcal > 0 && kcal < 350) cats.push('low-cal');
-  if (pro > 20) cats.push('high-protein');
-  // 조리법이 간단한 것들 → 5min
-  if (/무침|비빔|샐러드|냉|데침/.test(way)) cats.push('5min');
+  if (kcal > 0 && kcal < 400) cats.push('low-cal');
+  if (minutes <= 20) cats.push('5min');
+  if (/닭|두부|콩|계란|달걀|생선|참치|새우|고기/.test(tyNm)) cats.push('high-protein');
   return cats.length > 0 ? cats : ['low-cal'];
 }
 
-// ── 카테고리별 이모지 ───────────────────────────────────────────
-const PAT_EMOJI: Record<string, string> = {
-  '반찬': '🥢', '국&찌개': '🍲', '밥': '🍚', '면&만두': '🍜',
-  '디저트': '🍮', '양식': '🍝', '일식': '🍣', '중국식': '🥡',
-  '간식': '🍘', '주식': '🍱',
-};
-
-// ── MFDS API row → Meal 변환 ────────────────────────────────────
+// ── MAFRA API row → Meal 변환 ───────────────────────────────────
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapRow(row: Record<string, any>): Meal {
-  const id = `api-${row.RCP_SEQ}`;
-  const name = (row.RCP_NM || '레시피').trim();
-  const kcal = parseInt(row.INFO_ENG || '0', 10) || 0;
-  const pro = parseInt(row.INFO_PRO || '0', 10) || 0;
-  const way = (row.RCP_WAY2 || '').trim();
+  const id = `mafra-${row.RECIPE_ID}`;
+  const name = (row.RECIPE_NM_KO || '레시피').trim();
+  const minutes = parseMinutes(row.COOKING_TIME);
+  const kcal = parseKcal(row.CALORIE);
+  const sumry = (row.SUMRY || '').trim();
+  const tyNm = (row.TY_NM || '').trim();
+  const nationNm = (row.NATION_NM || '').trim();
+  const levelNm = (row.LEVEL_NM || '').trim();
+  const irdntCode = (row.IRDNT_CODE || '').trim();
+  const pcNm = (row.PC_NM || '').trim();
 
-  // 조리 단계: MANUAL01 ~ MANUAL20
-  const steps: string[] = [];
-  for (let i = 1; i <= 20; i++) {
-    const key = `MANUAL${String(i).padStart(2, '0')}`;
-    const val = (row[key] || '').trim();
-    if (!val) continue;
-    // 앞의 "N." 숫자 제거 후 뒤의 알파벳 artifact(a/b/c) 제거
-    const cleaned = val.replace(/^\d+\.\s*/, '').replace(/[a-c]$/, '').trim();
-    if (cleaned) steps.push(cleaned);
-  }
+  const categories = deriveCategories(kcal, minutes, irdntCode + tyNm);
 
-  const ingredients = parseIngredients(row.RCP_PARTS_DTLS || '', row.RCP_SEQ);
-  const categories = deriveCategories(kcal, way, pro);
+  const emoji = TY_EMOJI[tyNm] || IRDNT_EMOJI[irdntCode] || '🍽️';
 
-  // 건강 노트
-  const naTip = (row.RCP_NA_TIP || '').replace(/\s+/g, ' ').trim();
-  const healthNote = naTip
-    ? (naTip.length > 35 ? naTip.slice(0, 35) + '…' : naTip)
-    : (kcal < 350 ? '저칼로리로 체중 관리에 도움' : '균형 잡힌 한 끼 식사');
+  const healthNote = sumry.length > 40 ? sumry.slice(0, 40) + '…' : sumry || '균형 잡힌 한 끼 식사';
 
-  const emoji = PAT_EMOJI[row.RCP_PAT2] || '🍽️';
-  const imageUrl = row.ATT_FILE_NO_MAIN || row.ATT_FILE_NO_MK || undefined;
+  const highlight = [
+    nationNm && tyNm ? `${nationNm} ${tyNm}` : tyNm || nationNm,
+    levelNm ? `난이도 ${levelNm}` : '',
+    pcNm ? `재료비 ${pcNm}` : '',
+  ].filter(Boolean).join(' · ') + ' ✨';
+
+  // 요약 문장을 조리 팁으로 활용
+  const steps = sumry ? [sumry] : [];
 
   return {
     id,
     emoji,
     name,
-    minutes: steps.length <= 3 ? 5 : steps.length <= 5 ? 10 : 15,
+    minutes,
     kcal,
     categories,
     healthNote,
-    highlight: way ? `${way}으로 뚝딱 완성 ✨` : '간편하게 즐기는 한 끼 ✨',
-    steps: steps.slice(0, 8),
-    ingredients,
-    imageUrl,
+    highlight,
+    steps,
+    ingredients: [],
+    imageUrl: undefined,
   };
 }
 
 // ── 실제 API fetch ──────────────────────────────────────────────
 async function fetchRecipes(): Promise<Meal[]> {
-  const url = `${BASE_URL}/${API_KEY}/COOKRCP01/json/1/${FETCH_COUNT}`;
+  const url = `${BASE_URL}/${API_KEY}/json/${GRID_BASIC}/1/${FETCH_COUNT}`;
   const res = await fetch(url, { next: { revalidate: 3600 } });
   const text = await res.text();
 
-  // 키 오류 시 HTML alert 반환
+  // HTML 오류 응답 확인
   if (text.trim().startsWith('<')) {
-    throw new Error('MFDS API key invalid or not activated');
+    throw new Error('MAFRA API key invalid or not activated');
   }
 
   const json = JSON.parse(text);
-  const rows: Record<string, string>[] = json?.COOKRCP01?.row ?? [];
-  if (rows.length === 0) throw new Error('Empty response from MFDS API');
+  const data = json[GRID_BASIC];
 
-  return rows.map(mapRow).filter(m => m.name && m.steps.length > 0);
+  if (!data || data.result?.code !== 'INFO-000') {
+    throw new Error(`MAFRA API error: ${data?.result?.message || 'Unknown error'}`);
+  }
+
+  const rows: Record<string, string>[] = data.row ?? [];
+  if (rows.length === 0) throw new Error('Empty response from MAFRA API');
+
+  return rows.map(mapRow).filter(m => m.name);
 }
 
 // ── Route Handlers ──────────────────────────────────────────────
@@ -176,7 +148,6 @@ export async function GET(request: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('[recipes API]', message);
-    // 클라이언트가 fallback 플래그를 보고 하드코딩 데이터를 사용
     return NextResponse.json(
       { error: message, fallback: true },
       { status: 503 }
