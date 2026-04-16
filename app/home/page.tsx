@@ -16,6 +16,7 @@ import RecommendationCard from "@/components/RecommendationCard";
 import ActionGuideSection from "@/components/ActionGuideSection";
 import ChecklistSection from "@/components/ChecklistSection";
 import BottomNav from "@/components/BottomNav";
+import RecipeImage from "@/components/RecipeImage";
 import { MEALS_LIST } from "@/lib/meals-data";
 import { Meal } from "@/lib/types";
 
@@ -320,24 +321,13 @@ export default function HomePage() {
                   className="relative flex items-center justify-center overflow-hidden"
                   style={{ height: "160px" }}
                 >
-                  {meal.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={meal.imageUrl}
-                      alt={meal.name}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  ) : (
-                    <div
-                      className="w-full h-full flex items-center justify-center"
-                      style={{
-                        background: "linear-gradient(135deg, #E8F8F0 0%, #F0FBF4 100%)",
-                        fontSize: "80px",
-                      }}
-                    >
-                      {meal.emoji}
-                    </div>
-                  )}
+                  <RecipeImage
+                    name={meal.name}
+                    existingUrl={meal.imageUrl}
+                    fallbackEmoji={meal.emoji}
+                    height={160}
+                    emojiFontSize={80}
+                  />
                   {/* Category badge */}
                   {meal.categories[0] && (
                     <span

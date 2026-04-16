@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getMealById } from "@/lib/meals-data";
 import { Meal, MealIngredient } from "@/lib/types";
+import RecipeImage from "@/components/RecipeImage";
 
 export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
   const router = useRouter();
@@ -66,34 +67,22 @@ export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
       {/* ── Hero ── */}
       <div className="relative" style={{ paddingTop: "56px", paddingBottom: "32px" }}>
 
-        {meal.imageUrl ? (
-          <div style={{ position: "relative", height: "260px", overflow: "hidden" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={meal.imageUrl}
-              alt={meal.name}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-            <div
-              style={{
-                position: "absolute", inset: 0,
-                background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(244,250,246,0.85) 80%, #F4FAF6 100%)",
-              }}
-            />
-          </div>
-        ) : (
+        <div style={{ position: "relative", height: "260px", overflow: "hidden" }}>
+          <RecipeImage
+            name={meal.name}
+            existingUrl={meal.imageUrl}
+            fallbackEmoji={meal.emoji}
+            height={260}
+            emojiFontSize={88}
+          />
           <div
             style={{
-              background: "linear-gradient(160deg, #E8F8F0 0%, #F4FAF6 60%)",
-              paddingTop: "8px",
-              paddingBottom: "8px",
+              position: "absolute", inset: 0,
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(244,250,246,0.85) 80%, #F4FAF6 100%)",
+              pointerEvents: "none",
             }}
-          >
-            <div className="text-center mb-6" style={{ fontSize: "88px", lineHeight: 1 }}>
-              {meal.emoji}
-            </div>
-          </div>
-        )}
+          />
+        </div>
 
         {/* Top bar */}
         <div
@@ -104,8 +93,8 @@ export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
             onClick={() => router.back()}
             className="flex items-center gap-1.5 transition-opacity hover:opacity-70"
             style={{
-              color: meal.imageUrl ? "#fff" : "var(--text2)",
-              textShadow: meal.imageUrl ? "0 1px 4px rgba(0,0,0,0.5)" : "none",
+              color: "#fff",
+              textShadow: "0 1px 4px rgba(0,0,0,0.5)",
             }}
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
