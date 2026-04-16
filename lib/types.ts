@@ -57,4 +57,5 @@ export interface Meal {
   highlight: string;
   steps: string[];
   ingredients: MealIngredient[];
+  imageUrl?: string;
 }

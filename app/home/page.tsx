@@ -17,6 +17,7 @@ import ActionGuideSection from "@/components/ActionGuideSection";
 import ChecklistSection from "@/components/ChecklistSection";
 import BottomNav from "@/components/BottomNav";
 import { MEALS_LIST } from "@/lib/meals-data";
+import { Meal } from "@/lib/types";
 
 const PERSONAS: { id: Persona; emoji: string; title: string; desc: string }[] = [
   { id: "homebody", emoji: "🏠", title: "집순이형",      desc: "수면 중심의 안정적 라이프스타일" },
@@ -28,10 +29,16 @@ export default function HomePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [health, setHealth] = useState<HealthSnapshot>(DEFAULT_HEALTH);
   const [showPersonaSheet, setShowPersonaSheet] = useState(false);
+  const [mealList, setMealList] = useState<Meal[]>(MEALS_LIST);
 
   useEffect(() => {
     setProfile(getProfile());
     setHealth(getCurrentHealth());
+    // 레시피 API fetch (실패 시 하드코딩 유지)
+    fetch("/api/recipes")
+      .then(r => r.json())
+      .then(data => { if (Array.isArray(data) && data.length > 0) setMealList(data); })
+      .catch(() => {});
   }, []);
 
   const persona = profile?.persona ?? "homebody";
@@ -296,7 +303,7 @@ export default function HomePage() {
             className="flex gap-3 overflow-x-auto pb-2"
             style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
           >
-            {MEALS_LIST.map((meal) => (
+            {mealList.map((meal) => (
               <div
                 key={meal.id}
                 className="flex-shrink-0 rounded-2xl overflow-hidden"
@@ -310,14 +317,27 @@ export default function HomePage() {
               >
                 {/* Hero photo area */}
                 <div
-                  className="relative flex items-center justify-center"
-                  style={{
-                    height: "160px",
-                    background: "linear-gradient(135deg, #E8F8F0 0%, #F0FBF4 100%)",
-                    fontSize: "80px",
-                  }}
+                  className="relative flex items-center justify-center overflow-hidden"
+                  style={{ height: "160px" }}
                 >
-                  {meal.emoji}
+                  {meal.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={meal.imageUrl}
+                      alt={meal.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  ) : (
+                    <div
+                      className="w-full h-full flex items-center justify-center"
+                      style={{
+                        background: "linear-gradient(135deg, #E8F8F0 0%, #F0FBF4 100%)",
+                        fontSize: "80px",
+                      }}
+                    >
+                      {meal.emoji}
+                    </div>
+                  )}
                   {/* Category badge */}
                   {meal.categories[0] && (
                     <span
