@@ -16,11 +16,14 @@ const FILTERS: { key: FilterKey; label: string }[] = [
   { key: "high-protein", label: "💪 고단백" },
 ];
 
+const PAGE_SIZE = 15;
+
 export default function MealListPage() {
   const [filter, setFilter] = useState<FilterKey>("all");
   const [meals, setMeals] = useState<Meal[]>(MEALS_LIST);
   const [loading, setLoading] = useState(true);
   const [apiSource, setApiSource] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   useEffect(() => {
     fetch("/api/recipes")
@@ -36,9 +39,17 @@ export default function MealListPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  // 필터 변경 시 목록 초기화
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [filter]);
+
   const filtered = filter === "all"
     ? meals
     : meals.filter(m => m.categories.includes(filter as MealCategory));
+
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   return (
     <div className="min-h-screen pb-24" style={{ background: "var(--bg)" }}>
@@ -117,12 +128,12 @@ export default function MealListPage() {
         {/* ── Meal List ── */}
         {!loading && (
           <div className="space-y-3">
-            {filtered.map((meal, i) => (
+            {visible.map((meal, i) => (
               <Link
                 key={meal.id}
                 href={`/meal/${meal.id}`}
                 className="card flex gap-4 p-4 block transition-transform active:scale-[0.98] animate-slide-up"
-                style={{ animationDelay: `${i * 60 + 80}ms` }}
+                style={{ animationDelay: `${i * 40 + 80}ms` }}
               >
                 {/* Thumbnail */}
                 <div
@@ -192,6 +203,33 @@ export default function MealListPage() {
               </Link>
             ))}
           </div>
+        )}
+
+        {/* ── 더 보기 ── */}
+        {!loading && hasMore && (
+          <div className="py-4 animate-fade-in">
+            <button
+              onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
+              className="w-full rounded-2xl font-semibold transition-all active:scale-[0.98]"
+              style={{
+                padding: "15px",
+                fontSize: "14px",
+                color: "var(--primary-dark)",
+                background: "var(--card)",
+                border: "1.5px solid var(--card-border)",
+                boxShadow: "0 2px 8px rgba(46,204,113,0.08)",
+              }}
+            >
+              더 보기  {visibleCount} / {filtered.length}
+            </button>
+          </div>
+        )}
+
+        {/* ── 전체 로드 완료 ── */}
+        {!loading && !hasMore && filtered.length > PAGE_SIZE && (
+          <p className="text-center py-5 animate-fade-in" style={{ fontSize: "12px", color: "var(--muted)" }}>
+            전체 {filtered.length}개 레시피를 모두 불러왔어요 🎉
+          </p>
         )}
 
         {!loading && filtered.length === 0 && (

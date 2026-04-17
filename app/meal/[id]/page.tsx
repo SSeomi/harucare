@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation";
 import { getMealById } from "@/lib/meals-data";
 import { Meal, MealIngredient } from "@/lib/types";
 import RecipeImage from "@/components/RecipeImage";
+import ShopSelectSheet from "@/components/ShopSelectSheet";
 
 export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
   const router = useRouter();
   const [meal, setMeal] = useState<Meal | null>(null);
   const [checked, setChecked] = useState<Set<string>>(new Set());
+  const [shopOpen, setShopOpen] = useState(false);
 
   useEffect(() => {
     params.then(async ({ id }) => {
@@ -36,12 +38,12 @@ export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
     });
   }
 
-  function buildCartUrl(meal: Meal) {
+  function buildSearchQuery(meal: Meal): string {
     const names = meal.ingredients
       .filter(i => checked.has(i.id))
       .map(i => i.label.split(/[\s(（]/)[0])
-      .join("+");
-    return `https://www.coupang.com/np/search?q=${encodeURIComponent(names || meal.name)}`;
+      .join(" ");
+    return names || meal.name;
   }
 
   const totalPrice = meal?.ingredients
@@ -280,19 +282,25 @@ export default function MealDetailPage({ params }: PageProps<"/meal/[id]">) {
           <p className="text-center" style={{ fontSize: "11px", color: "var(--muted)" }}>
             한 번에 구매하고 내일 아침에 바로 드세요!
           </p>
-          <a
-            href={buildCartUrl(meal)}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setShopOpen(true)}
             className="btn-primary"
             style={{ fontSize: "15px", padding: "17px" }}
           >
-            🛒 쿠팡에서 재료 검색
+            🛒 쇼핑몰에서 재료 구매
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8"
                 strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </button>
+
+          <ShopSelectSheet
+            query={buildSearchQuery(meal)}
+            category="food"
+            isOpen={shopOpen}
+            onClose={() => setShopOpen(false)}
+            title="재료 구매할 쇼핑몰"
+          />
         </div>
       </div>
     </div>
