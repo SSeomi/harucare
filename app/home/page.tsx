@@ -9,12 +9,10 @@ import {
   DEFAULT_HEALTH,
 } from "@/lib/storage";
 import { getRecommendations } from "@/lib/recommendations";
-import { getPrimaryAlert } from "@/lib/health";
+import { getPrimaryAlert, getActionGuide } from "@/lib/health";
 import Link from "next/link";
 import HealthMetricsSection from "@/components/HealthMetricsSection";
 import RecommendationCard from "@/components/RecommendationCard";
-import ActionGuideSection from "@/components/ActionGuideSection";
-import ChecklistSection from "@/components/ChecklistSection";
 import BottomNav from "@/components/BottomNav";
 import RecipeImage from "@/components/RecipeImage";
 import { MEALS_LIST } from "@/lib/meals-data";
@@ -30,16 +28,22 @@ export default function HomePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [health, setHealth] = useState<HealthSnapshot>(DEFAULT_HEALTH);
   const [showPersonaSheet, setShowPersonaSheet] = useState(false);
+  const [missionChecked, setMissionChecked] = useState<Set<number>>(new Set());
   const [mealList, setMealList] = useState<Meal[]>(MEALS_LIST);
 
   useEffect(() => {
     setProfile(getProfile());
     setHealth(getCurrentHealth());
-    // 레시피 API fetch (실패 시 하드코딩 유지)
     fetch("/api/recipes")
       .then(r => r.json())
       .then(data => { if (Array.isArray(data) && data.length > 0) setMealList(data); })
       .catch(() => {});
+    // 미션 체크 상태 로드 (날짜별 자동 리셋)
+    const today = new Date().toISOString().slice(0, 10);
+    try {
+      const raw = localStorage.getItem(`hc_missions_${today}`);
+      if (raw) setMissionChecked(new Set(JSON.parse(raw) as number[]));
+    } catch {}
   }, []);
 
   const persona = profile?.persona ?? "homebody";
@@ -47,8 +51,19 @@ export default function HomePage() {
   const goalWeight = profile?.goalWeight ?? 60;
   const recs = getRecommendations(persona, health);
   const alert = getPrimaryAlert(health);
+  const missions = getActionGuide(alert);
 
   const currentPersona = PERSONAS.find(p => p.id === persona) ?? PERSONAS[0];
+
+  function toggleMission(i: number) {
+    const today = new Date().toISOString().slice(0, 10);
+    setMissionChecked(prev => {
+      const next = new Set(prev);
+      next.has(i) ? next.delete(i) : next.add(i);
+      try { localStorage.setItem(`hc_missions_${today}`, JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }
 
   function handlePersonaSelect(id: Persona) {
     if (!profile) return;
@@ -267,21 +282,106 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Section 2: Daily Action Guide ── */}
+        {/* ── Section 2: Today's Mission ── */}
         <section className="mb-5 animate-slide-up" style={{ animationDelay: "140ms" }}>
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-semibold" style={{ fontSize: "13px", color: "var(--text2)" }}>
-              오늘의 실행 가이드
-            </p>
-          </div>
           <div className="card p-4">
-            <p
-              className="font-bold mb-4"
-              style={{ fontSize: "15px", color: "var(--text)", letterSpacing: "-0.3px" }}
-            >
-              🌟 {name}님, 오늘 이렇게만 챙겨보세요!
+            <p className="font-bold mb-4" style={{ fontSize: "16px", color: "var(--text)", letterSpacing: "-0.3px" }}>
+              🔥 오늘의 미션
             </p>
-            <ActionGuideSection alert={alert} />
+            <div className="space-y-2">
+              {missions.map((mission, i) => {
+                const done = missionChecked.has(i);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => toggleMission(i)}
+                    className="w-full flex items-center gap-3 rounded-xl p-3 transition-all active:scale-[0.98]"
+                    style={{
+                      background: done ? "rgba(46,204,113,0.06)" : "var(--faint2)",
+                      border: `1px solid ${done ? "rgba(46,204,113,0.2)" : "var(--card-border)"}`,
+                    }}
+                  >
+                    {/* 체크박스 */}
+                    <div
+                      className="flex items-center justify-center rounded-full flex-shrink-0"
+                      style={{
+                        width: "22px", height: "22px",
+                        background: done ? "var(--primary)" : "transparent",
+                        border: `2px solid ${done ? "var(--primary)" : "var(--card-border)"}`,
+                        transition: "all 0.2s",
+                      }}
+                    >
+                      {done && (
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" className="animate-check-pop">
+                          <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" strokeWidth="1.8"
+                            strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
+                    </div>
+
+                    {/* 미션 내용 */}
+                    <div className="flex-1 text-left">
+                      <p
+                        className="font-semibold"
+                        style={{
+                          fontSize: "14px",
+                          color: done ? "var(--muted)" : "var(--text)",
+                          textDecoration: done ? "line-through" : "none",
+                        }}
+                      >
+                        {mission.emoji} {mission.text}
+                      </p>
+                      {mission.subText && !done && (
+                        <p style={{ fontSize: "11px", color: "var(--muted)", marginTop: "2px" }}>
+                          {mission.subText}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* 완료 버튼 */}
+                    {!done && (
+                      <span
+                        className="font-semibold rounded-full flex-shrink-0"
+                        style={{
+                          fontSize: "11px",
+                          color: "var(--primary-dark)",
+                          background: "var(--badge-green)",
+                          border: "1px solid var(--card-border)",
+                          padding: "4px 10px",
+                        }}
+                      >
+                        완료
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* 진행률 */}
+            <div
+              className="flex items-center justify-between mt-4 pt-3"
+              style={{ borderTop: "1px solid var(--card-border)" }}
+            >
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: missionChecked.size === 3 ? "var(--primary-dark)" : "var(--muted)",
+                  fontWeight: 600,
+                }}
+              >
+                {missionChecked.size}/3 완료 · 오늘도 잘하고 있어요! 💚
+              </p>
+              <div className="rounded-full overflow-hidden" style={{ width: "60px", height: "5px", background: "var(--faint)" }}>
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${(missionChecked.size / 3) * 100}%`,
+                    background: "linear-gradient(90deg, var(--primary), var(--primary-dark))",
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -414,6 +514,30 @@ export default function HomePage() {
               Rule of 3
             </span>
           </div>
+
+          {/* Health-alert reason banner */}
+          {(() => {
+            const bannerMap: Record<typeof alert, { emoji: string; text: string; bg: string; color: string } | null> = {
+              high_bp:    { emoji: "🩺", text: "혈압이 높아 저염 식품을 추천해요", bg: "rgba(220,38,38,0.07)",  color: "#DC2626" },
+              high_sugar: { emoji: "🩸", text: "혈당이 높아 저당 식품을 추천해요", bg: "rgba(234,88,12,0.07)",  color: "#EA580C" },
+              overweight: { emoji: "⚖️", text: "체중 관리를 위해 저칼로리 식품을 추천해요", bg: "rgba(37,99,235,0.07)", color: "#2563EB" },
+              normal:     null,
+            };
+            const banner = bannerMap[alert];
+            if (!banner) return null;
+            return (
+              <div
+                className="flex items-center gap-2 rounded-xl px-3 py-2.5 mb-3 animate-fade-in"
+                style={{ background: banner.bg, border: `1px solid ${banner.color}22` }}
+              >
+                <span style={{ fontSize: "14px" }}>{banner.emoji}</span>
+                <p className="font-semibold" style={{ fontSize: "12px", color: banner.color }}>
+                  {banner.text}
+                </p>
+              </div>
+            );
+          })()}
+
           <div className="space-y-3">
             {recs.map((rec, i) => (
               <RecommendationCard key={rec.product.id} rec={rec} index={i} />
@@ -421,16 +545,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Section 4: Today's Checklist ── */}
-        <section className="animate-slide-up" style={{ animationDelay: "360ms" }}>
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-semibold" style={{ fontSize: "13px", color: "var(--text2)" }}>
-              오늘 체크리스트
-            </p>
-            <span style={{ fontSize: "12px", color: "var(--warning)" }}>목표까지 달림 🔥</span>
-          </div>
-          <ChecklistSection />
-        </section>
       </main>
 
       <BottomNav />

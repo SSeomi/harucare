@@ -38,13 +38,13 @@ function buildReason(
 ): string {
   const name = product.name;
   if (alert === 'high_bp') {
-    return `혈압 ${health.bp_sys}mmHg — ${name}의 성분이 혈압 관리에 직접 도움이 돼요`;
+    return `혈압이 높아(${health.bp_sys}mmHg) 저염 식품인 ${name}을 추천해요`;
   }
   if (alert === 'high_sugar') {
-    return `혈당 ${health.blood_sugar}mg/dL — ${name}으로 인슐린 반응을 안정시켜 보세요`;
+    return `혈당이 높아(${health.blood_sugar}mg/dL) 저당 식품인 ${name}을 추천해요`;
   }
   if (alert === 'overweight') {
-    return `체중 ${health.weight}kg — ${name}이 체중 관리 루틴의 핵심이에요`;
+    return `체중 관리를 위해 저칼로리 식품인 ${name}을 추천해요`;
   }
   // normal
   if (persona === 'homebody') return `집에서 보내는 시간이 많은 분께 ${name}을 특별히 추천해요`;

@@ -13,7 +13,7 @@ interface CartProduct {
   id: number;
   name: string;
   emoji: string;
-  prices: StorePrice[]; // 가격 낮은 순 정렬
+  prices: StorePrice[];
 }
 
 // ── 하드코딩 상품 데이터 ─────────────────────────────────
@@ -60,9 +60,10 @@ function sortedPrices(p: CartProduct): StorePrice[] {
   return [...p.prices].sort((a, b) => a.price - b.price);
 }
 
-function initSelectedStores(): Map<number, string> {
-  const map = new Map<number, string>();
-  for (const p of PRODUCTS) map.set(p.id, sortedPrices(p)[0].store);
+// 초기값: 각 상품의 최저가 쇼핑몰만 선택
+function initSelectedStores(): Map<number, Set<string>> {
+  const map = new Map<number, Set<string>>();
+  for (const p of PRODUCTS) map.set(p.id, new Set([sortedPrices(p)[0].store]));
   return map;
 }
 
@@ -70,16 +71,17 @@ function initSelectedStores(): Map<number, string> {
 export default function CartPage() {
   const router = useRouter();
 
+  // 상품 포함 여부 (최상위 체크박스)
   const [checkedIds, setCheckedIds] = useState<Set<number>>(
     new Set(PRODUCTS.map(p => p.id))
   );
-  const [selectedStores, setSelectedStores] = useState<Map<number, string>>(
+  // 상품별 선택된 쇼핑몰 집합 (다중 선택 가능)
+  const [selectedStores, setSelectedStores] = useState<Map<number, Set<string>>>(
     initSelectedStores
   );
   const [sheetOpen, setSheetOpen] = useState(false);
   const [openingStatus, setOpeningStatus] = useState<string | null>(null);
 
-  // 시트 열릴 때 배경 스크롤 방지
   useEffect(() => {
     document.body.style.overflow = sheetOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -93,46 +95,48 @@ export default function CartPage() {
     });
   }
 
-  function toggleAll() {
-    setCheckedIds(
-      checkedIds.size === PRODUCTS.length
-        ? new Set()
-        : new Set(PRODUCTS.map(p => p.id))
-    );
-  }
-
-  function selectStore(productId: number, store: string) {
+  function toggleStore(productId: number, store: string) {
     setSelectedStores(prev => {
       const next = new Map(prev);
-      next.set(productId, store);
+      const stores = new Set(next.get(productId) ?? []);
+      stores.has(store) ? stores.delete(store) : stores.add(store);
+      next.set(productId, stores);
       return next;
     });
   }
 
   // ── 파생 데이터 ────────────────────────────────────────
-  // 선택된 쇼핑몰 기준 그룹핑
+
+  // 체크된 상품들의 선택된 모든 쇼핑몰로 그룹핑 (중복 포함)
   const storeGroups = useMemo(() => {
-    const map = new Map<string, { items: { product: CartProduct; selected: StorePrice }[] }>();
+    const map = new Map<string, { items: { product: CartProduct; entry: StorePrice }[] }>();
     for (const product of PRODUCTS) {
       if (!checkedIds.has(product.id)) continue;
-      const storeName = selectedStores.get(product.id) ?? sortedPrices(product)[0].store;
-      const selected = product.prices.find(p => p.store === storeName) ?? sortedPrices(product)[0];
-      if (!map.has(selected.store)) map.set(selected.store, { items: [] });
-      map.get(selected.store)!.items.push({ product, selected });
+      const stores = selectedStores.get(product.id) ?? new Set<string>();
+      for (const storeName of stores) {
+        const entry = product.prices.find(p => p.store === storeName);
+        if (!entry) continue;
+        if (!map.has(storeName)) map.set(storeName, { items: [] });
+        map.get(storeName)!.items.push({ product, entry });
+      }
     }
     return map;
   }, [checkedIds, selectedStores]);
 
-  // 현재 선택 기준 합계
+  // 합계: 상품별 선택된 쇼핑몰 중 최저가 1개만 반영
   const currentTotal = useMemo(() =>
     PRODUCTS.filter(p => checkedIds.has(p.id)).reduce((sum, p) => {
-      const storeName = selectedStores.get(p.id) ?? sortedPrices(p)[0].store;
-      return sum + (p.prices.find(e => e.store === storeName)?.price ?? sortedPrices(p)[0].price);
+      const stores = selectedStores.get(p.id) ?? new Set<string>();
+      if (stores.size === 0) return sum;
+      const minPrice = Math.min(
+        ...[...stores].map(s => p.prices.find(e => e.store === s)?.price ?? Infinity)
+      );
+      return sum + (isFinite(minPrice) ? minPrice : 0);
     }, 0),
     [checkedIds, selectedStores]
   );
 
-  // 최저가 기준 합계
+  // 전체 최저가 기준 합계 (비교용)
   const cheapestTotal = useMemo(() =>
     PRODUCTS.filter(p => checkedIds.has(p.id)).reduce((sum, p) => sum + sortedPrices(p)[0].price, 0),
     [checkedIds]
@@ -140,13 +144,12 @@ export default function CartPage() {
 
   const overpaying = currentTotal - cheapestTotal;
 
-  // 순차적으로 탭 열기
   async function openAllSequentially() {
     const groups = Array.from(storeGroups.entries());
     for (let i = 0; i < groups.length; i++) {
       const [storeName, group] = groups[i];
       setOpeningStatus(`${storeName}을(를) 열고 있어요… (${i + 1}/${groups.length})`);
-      window.open(group.items[0].selected.url, "_blank", "noopener,noreferrer");
+      window.open(group.items[0].entry.url, "_blank", "noopener,noreferrer");
       if (i < groups.length - 1) await new Promise(r => setTimeout(r, 500));
     }
     setOpeningStatus("모든 쇼핑몰이 열렸어요 ✅");
@@ -156,179 +159,130 @@ export default function CartPage() {
     }, 2000);
   }
 
-  const allChecked = checkedIds.size === PRODUCTS.length;
   const hasChecked = checkedIds.size > 0;
 
   return (
     <div className="min-h-screen pb-52" style={{ background: "var(--bg)" }}>
 
       {/* ── 헤더 ── */}
-      <div
-        style={{
-          background: "var(--card)",
-          borderBottom: "1px solid var(--card-border)",
-          paddingTop: "56px",
-        }}
-      >
-        <div className="flex items-start justify-between px-5 pb-4">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.back()}
-              className="flex items-center justify-center rounded-full flex-shrink-0 transition-opacity hover:opacity-70"
-              style={{
-                width: "36px", height: "36px",
-                background: "var(--faint2)",
-                border: "1px solid var(--card-border)",
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M11 4l-5 5 5 5" stroke="var(--text2)" strokeWidth="1.8"
-                  strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <div>
-              <h1 className="font-bold" style={{ fontSize: "18px", color: "var(--text)", letterSpacing: "-0.4px" }}>
-                🛒 오늘의 장바구니
-              </h1>
-              <p style={{ fontSize: "12px", color: "var(--muted)", marginTop: "1px" }}>
-                원하는 쇼핑몰을 라디오 버튼으로 선택하세요
-              </p>
-            </div>
-          </div>
-
-          {/* 전체선택 */}
-          <button onClick={toggleAll} className="flex items-center gap-1.5 flex-shrink-0" style={{ marginTop: "4px" }}>
-            <div
-              className="flex items-center justify-center rounded-md"
-              style={{
-                width: "20px", height: "20px",
-                background: allChecked ? "var(--primary)" : "transparent",
-                border: `2px solid ${allChecked ? "var(--primary)" : "var(--card-border)"}`,
-                transition: "all 0.2s",
-              }}
-            >
-              {allChecked && (
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" strokeWidth="1.8"
-                    strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              )}
-            </div>
-            <span style={{ fontSize: "12px", color: "var(--text2)", fontWeight: 600 }}>전체선택</span>
+      <div style={{ background: "var(--card)", borderBottom: "1px solid var(--card-border)", paddingTop: "56px" }}>
+        <div className="flex items-center gap-3 px-5 pb-4">
+          <button
+            onClick={() => router.back()}
+            className="flex items-center justify-center rounded-full flex-shrink-0 transition-opacity hover:opacity-70"
+            style={{ width: "36px", height: "36px", background: "var(--faint2)", border: "1px solid var(--card-border)" }}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11 4l-5 5 5 5" stroke="var(--text2)" strokeWidth="1.8"
+                strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
+          <div>
+            <h1 className="font-bold" style={{ fontSize: "18px", color: "var(--text)", letterSpacing: "-0.4px" }}>
+              🛒 오늘의 장바구니
+            </h1>
+            <p style={{ fontSize: "12px", color: "var(--muted)", marginTop: "1px" }}>
+              쇼핑몰을 여러 곳 동시에 선택할 수 있어요
+            </p>
+          </div>
         </div>
       </div>
 
       <div className="mx-auto max-w-[390px] px-4 pt-5 space-y-5">
 
-        {/* ── 상품 리스트 (라디오 버튼) ── */}
+        {/* ── 상품 리스트 (쇼핑몰 체크박스) ── */}
         <section>
           <div className="space-y-3">
             {PRODUCTS.map(product => {
               const sorted = sortedPrices(product);
               const isChecked = checkedIds.has(product.id);
-              const selectedStoreName = selectedStores.get(product.id) ?? sorted[0].store;
-              const selectedEntry = product.prices.find(p => p.store === selectedStoreName) ?? sorted[0];
+              const stores = selectedStores.get(product.id) ?? new Set<string>();
+              const isDuplicate = isChecked && stores.size >= 2;
+
+              // 선택된 쇼핑몰 중 최저가 (헤더 가격 표시용)
+              const selectedPrices = [...stores]
+                .map(s => product.prices.find(e => e.store === s)?.price ?? Infinity)
+                .filter(isFinite);
+              const displayPrice = selectedPrices.length > 0
+                ? Math.min(...selectedPrices)
+                : sorted[0].price;
 
               return (
                 <div
                   key={product.id}
                   className="card p-4 animate-slide-up transition-all"
                   style={{
-                    border: `1.5px solid ${isChecked ? "rgba(46,204,113,0.3)" : "var(--card-border)"}`,
-                    background: isChecked ? "rgba(46,204,113,0.02)" : "var(--card)",
+                    border: `1.5px solid ${isDuplicate ? "rgba(255,165,0,0.4)" : isChecked ? "rgba(46,204,113,0.3)" : "var(--card-border)"}`,
+                    background: isDuplicate ? "rgba(255,165,0,0.02)" : isChecked ? "rgba(46,204,113,0.02)" : "var(--card)",
                   }}
                 >
-                  {/* 상품명 + 체크박스 */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <button
-                      onClick={() => toggleProduct(product.id)}
-                      className="flex items-center justify-center rounded-full flex-shrink-0"
-                      style={{
-                        width: "24px", height: "24px",
-                        background: isChecked ? "var(--primary)" : "transparent",
-                        border: `2px solid ${isChecked ? "var(--primary)" : "var(--card-border)"}`,
-                        transition: "all 0.2s",
-                      }}
-                    >
-                      {isChecked && (
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="animate-check-pop">
-                          <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="1.8"
-                            strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                    </button>
-                    <span style={{ fontSize: "22px" }}>{product.emoji}</span>
+                  {/* 상품명 */}
+                  <div className="flex items-center justify-between w-full mb-1">
                     <p
-                      className="font-bold flex-1"
-                      style={{
-                        fontSize: "15px",
-                        color: isChecked ? "var(--text)" : "var(--muted)",
-                        letterSpacing: "-0.2px",
-                      }}
+                      className="font-bold"
+                      style={{ fontSize: "15px", color: "var(--text)", letterSpacing: "-0.2px" }}
                     >
                       {product.name}
                     </p>
-                    {/* 현재 선택된 쇼핑몰 가격 */}
                     <p
-                      className="font-bold tabular-nums flex-shrink-0"
-                      style={{
-                        fontSize: "15px",
-                        color: isChecked ? "var(--primary-dark)" : "var(--muted)",
-                      }}
+                      className="font-bold tabular-nums"
+                      style={{ fontSize: "15px", color: stores.size > 0 ? "var(--primary-dark)" : "var(--muted)" }}
                     >
-                      {selectedEntry.price.toLocaleString()}원
+                      {stores.size > 0 ? `${displayPrice.toLocaleString()}원` : "—"}
                     </p>
                   </div>
 
-                  {/* 쇼핑몰 라디오 버튼 목록 */}
-                  <div className="space-y-1.5 pl-9">
+                  {/* 중복 구매 경고 */}
+                  {isDuplicate && (
+                    <p
+                      className="animate-fade-in"
+                      style={{ fontSize: "11px", color: "#B45309", fontWeight: 600, marginBottom: "8px" }}
+                    >
+                      ⚠️ 중복 구매 주의 — 합계엔 최저가만 반영돼요
+                    </p>
+                  )}
+
+                  {/* 쇼핑몰 체크박스 목록 */}
+                  <div className="space-y-1.5 mt-2">
                     {sorted.map((entry, idx) => {
                       const s = storeStyle(entry.store);
                       const isCheapest = idx === 0;
-                      const isSelected = selectedStoreName === entry.store;
+                      const isStoreChecked = stores.has(entry.store);
 
                       return (
                         <button
                           key={entry.store}
-                          onClick={() => isChecked && selectStore(product.id, entry.store)}
+                          onClick={() => isChecked && toggleStore(product.id, entry.store)}
                           disabled={!isChecked}
                           className="w-full flex items-center gap-2 rounded-xl px-2 py-1.5 transition-all"
                           style={{
-                            background: isSelected && isChecked ? "rgba(46,204,113,0.06)" : "transparent",
-                            border: `1px solid ${isSelected && isChecked ? "rgba(46,204,113,0.2)" : "transparent"}`,
+                            background: isStoreChecked && isChecked ? "rgba(46,204,113,0.06)" : "transparent",
+                            border: `1px solid ${isStoreChecked && isChecked ? "rgba(46,204,113,0.2)" : "transparent"}`,
                             cursor: isChecked ? "pointer" : "default",
                           }}
                         >
-                          {/* 라디오 원 */}
+                          {/* 체크박스 */}
                           <div
-                            className="flex items-center justify-center flex-shrink-0"
+                            className="flex items-center justify-center rounded flex-shrink-0"
                             style={{
                               width: "16px", height: "16px",
-                              borderRadius: "50%",
-                              border: `2px solid ${isSelected && isChecked ? "var(--primary)" : "var(--card-border)"}`,
-                              background: "transparent",
-                              transition: "border-color 0.15s",
+                              background: isStoreChecked && isChecked ? "var(--primary)" : "transparent",
+                              border: `2px solid ${isStoreChecked && isChecked ? "var(--primary)" : "var(--card-border)"}`,
+                              transition: "all 0.15s",
                             }}
                           >
-                            {isSelected && isChecked && (
-                              <div style={{
-                                width: "7px", height: "7px",
-                                borderRadius: "50%",
-                                background: "var(--primary)",
-                              }} />
+                            {isStoreChecked && isChecked && (
+                              <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                                <path d="M1.5 4.5l2 2 4-4" stroke="#fff" strokeWidth="1.6"
+                                  strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
                             )}
                           </div>
 
                           {/* 쇼핑몰 아이콘 */}
                           <div
                             className="flex items-center justify-center rounded-lg flex-shrink-0"
-                            style={{
-                              width: "22px", height: "22px",
-                              background: s.badgeBg,
-                              fontSize: "12px",
-                              opacity: isChecked ? 1 : 0.5,
-                            }}
+                            style={{ width: "22px", height: "22px", background: s.badgeBg, fontSize: "12px", opacity: isChecked ? 1 : 0.5 }}
                           >
                             {s.icon}
                           </div>
@@ -336,8 +290,8 @@ export default function CartPage() {
                           <span
                             style={{
                               fontSize: "12px",
-                              color: isSelected && isChecked ? "var(--text)" : "var(--muted)",
-                              fontWeight: isSelected && isChecked ? 600 : 400,
+                              color: isStoreChecked && isChecked ? "var(--text)" : "var(--muted)",
+                              fontWeight: isStoreChecked && isChecked ? 600 : 400,
                               minWidth: "64px",
                               textAlign: "left",
                             }}
@@ -349,8 +303,8 @@ export default function CartPage() {
                             className="tabular-nums flex-1 text-left"
                             style={{
                               fontSize: "12px",
-                              color: isSelected && isChecked ? "var(--primary-dark)" : "var(--muted)",
-                              fontWeight: isSelected && isChecked ? 700 : 400,
+                              color: isStoreChecked && isChecked ? "var(--primary-dark)" : "var(--muted)",
+                              fontWeight: isStoreChecked && isChecked ? 700 : 400,
                             }}
                           >
                             {entry.price.toLocaleString()}원
@@ -359,12 +313,7 @@ export default function CartPage() {
                           {isCheapest && (
                             <span
                               className="font-bold rounded-full flex-shrink-0"
-                              style={{
-                                fontSize: "9px",
-                                color: "#fff",
-                                background: "var(--primary)",
-                                padding: "2px 6px",
-                              }}
+                              style={{ fontSize: "9px", color: "#fff", background: "var(--primary)", padding: "2px 6px" }}
                             >
                               최저가
                             </span>
@@ -380,7 +329,7 @@ export default function CartPage() {
         </section>
 
         {/* ── 쇼핑몰별 그룹핑 ── */}
-        {hasChecked && (
+        {hasChecked && storeGroups.size > 0 && (
           <section className="animate-fade-in">
             <p className="font-semibold mb-3" style={{ fontSize: "13px", color: "var(--text2)" }}>
               📦 쇼핑몰별 묶음
@@ -388,7 +337,7 @@ export default function CartPage() {
             <div className="space-y-3">
               {Array.from(storeGroups.entries()).map(([storeName, group]) => {
                 const s = storeStyle(storeName);
-                const subtotal = group.items.reduce((sum, { selected }) => sum + selected.price, 0);
+                const subtotal = group.items.reduce((sum, { entry }) => sum + entry.price, 0);
 
                 return (
                   <div key={storeName} className="card p-4 animate-slide-up">
@@ -416,21 +365,21 @@ export default function CartPage() {
                       className="space-y-1.5 mb-3 py-3"
                       style={{ borderTop: "1px solid var(--card-border)", borderBottom: "1px solid var(--card-border)" }}
                     >
-                      {group.items.map(({ product, selected }) => (
+                      {group.items.map(({ product, entry }) => (
                         <div key={product.id} className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span style={{ fontSize: "14px" }}>{product.emoji}</span>
                             <span style={{ fontSize: "13px", color: "var(--text2)" }}>{product.name}</span>
                           </div>
                           <span className="tabular-nums font-semibold" style={{ fontSize: "13px", color: "var(--primary-dark)" }}>
-                            {selected.price.toLocaleString()}원
+                            {entry.price.toLocaleString()}원
                           </span>
                         </div>
                       ))}
                     </div>
 
                     <button
-                      onClick={() => window.open(group.items[0].selected.url, "_blank", "noopener,noreferrer")}
+                      onClick={() => window.open(group.items[0].entry.url, "_blank", "noopener,noreferrer")}
                       className="w-full rounded-xl py-2.5 font-bold transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                       style={{ fontSize: "13px", color: s.color, background: s.badgeBg, border: `1.5px solid ${s.color}30` }}
                     >
@@ -468,7 +417,7 @@ export default function CartPage() {
           >
             <div className="flex items-center justify-between">
               <span style={{ fontSize: "13px", color: "var(--muted)" }}>
-                선택 {checkedIds.size}개 합계
+                선택 {checkedIds.size}개 합계 (최저가 기준)
               </span>
               <span className="font-bold tabular-nums" style={{ fontSize: "22px", color: "var(--primary-dark)", letterSpacing: "-0.5px" }}>
                 {currentTotal.toLocaleString()}원
@@ -477,7 +426,7 @@ export default function CartPage() {
             {overpaying > 0 && hasChecked && (
               <div className="animate-fade-in" style={{ paddingTop: "6px", borderTop: "1px solid var(--card-border)" }}>
                 <div className="flex items-center justify-between">
-                  <span style={{ fontSize: "11px", color: "var(--muted)" }}>최저가로 구매 시</span>
+                  <span style={{ fontSize: "11px", color: "var(--muted)" }}>전체 최저가로 구매 시</span>
                   <span className="tabular-nums font-semibold" style={{ fontSize: "11px", color: "var(--text2)" }}>
                     {cheapestTotal.toLocaleString()}원
                   </span>
@@ -492,9 +441,13 @@ export default function CartPage() {
           {/* 전체 열기 버튼 */}
           <button
             onClick={() => setSheetOpen(true)}
-            disabled={!hasChecked}
+            disabled={!hasChecked || storeGroups.size === 0}
             className="btn-primary w-full"
-            style={{ fontSize: "15px", padding: "17px", opacity: hasChecked ? 1 : 0.45, cursor: hasChecked ? "pointer" : "not-allowed" }}
+            style={{
+              fontSize: "15px", padding: "17px",
+              opacity: hasChecked && storeGroups.size > 0 ? 1 : 0.45,
+              cursor: hasChecked && storeGroups.size > 0 ? "pointer" : "not-allowed",
+            }}
           >
             ✅ 선택한 쇼핑몰 전체 열기
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -561,7 +514,7 @@ export default function CartPage() {
                       </div>
                     </div>
                     <button
-                      onClick={() => window.open(group.items[0].selected.url, "_blank", "noopener,noreferrer")}
+                      onClick={() => window.open(group.items[0].entry.url, "_blank", "noopener,noreferrer")}
                       className="w-full rounded-xl py-2.5 font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
                       style={{ fontSize: "13px", color: s.color, background: s.badgeBg, border: `1.5px solid ${s.color}30` }}
                     >
